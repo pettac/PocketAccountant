@@ -11,11 +11,61 @@
     tools:context="cst4701.game.pocketaccountant.Continue">
 
     <TextView
-        android:text="Continue Game Selected"
+        android:text="Countdown Timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="242dp"
-        android:id="@+id/textView" />
+        android:layout_marginTop="188dp"
+        android:id="@+id/countdownHeader"
+        android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="53dp"
+        android:id="@+id/countdownTimer"
+        android:textSize="24sp"
+        android:layout_below="@+id/countdownHeader"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:id="@+id/happyTitle"
+        android:textSize="24sp"
+        android:text="Happiness:"
+        android:layout_below="@+id/countdownTimer"
+        android:layout_toStartOf="@+id/countdownTimer" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/happyTitle"
+        android:layout_toEndOf="@+id/countdownTimer"
+        android:layout_marginStart="11dp"
+        android:id="@+id/happyValue"
+        android:textSize="24sp"
+        android:text="100" />
+
+    <TextView
+        android:text="Hunger:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:id="@+id/hungerTitle"
+        android:textSize="24sp"
+        android:layout_below="@+id/happyTitle"
+        android:layout_toStartOf="@+id/happyValue" />
+
+    <TextView
+        android:text="100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/hungerTitle"
+        android:layout_alignStart="@+id/happyValue"
+        android:id="@+id/hungerValue"
+        android:textSize="24sp" />
+
 </RelativeLayout>
