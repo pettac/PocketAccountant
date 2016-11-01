@@ -10,6 +10,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="cst4701.game.pocketaccountant.Continue">
 
+    <ProgressBar
+        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/happyTitle"
+        android:layout_alignStart="@+id/happyTitle"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/progressBar2"
+        android:layout_alignEnd="@+id/happyValue"
+        android:visibility="visible" />
+
     <TextView
         android:text="Countdown Timer"
         android:layout_width="wrap_content"
@@ -53,19 +65,42 @@
         android:text="Hunger:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="83dp"
         android:id="@+id/hungerTitle"
         android:textSize="24sp"
         android:layout_below="@+id/happyTitle"
-        android:layout_toStartOf="@+id/happyValue" />
+        android:layout_alignEnd="@+id/happyTitle" />
 
     <TextView
         android:text="100"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/hungerTitle"
-        android:layout_alignStart="@+id/happyValue"
         android:id="@+id/hungerValue"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:layout_alignBaseline="@+id/hungerTitle"
+        android:layout_alignBottom="@+id/hungerTitle"
+        android:layout_alignStart="@+id/happyValue" />
+
+    <ProgressBar
+        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/happyTitle"
+        android:layout_alignStart="@+id/happyTitle"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/happyBar"
+        android:layout_alignEnd="@+id/happyValue"
+        android:indeterminate="false" />
+
+    <ProgressBar
+        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hungerTitle"
+        android:layout_alignStart="@+id/happyTitle"
+        android:layout_marginTop="21dp"
+        android:id="@+id/hungerBar"
+        android:layout_alignEnd="@+id/hungerValue" />
 
 </RelativeLayout>
