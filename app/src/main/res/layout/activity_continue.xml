@@ -10,18 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="cst4701.game.pocketaccountant.Continue">
 
-    <ProgressBar
-        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/happyTitle"
-        android:layout_alignStart="@+id/happyTitle"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:id="@+id/progressBar2"
-        android:layout_alignEnd="@+id/happyValue"
-        android:visibility="visible" />
-
     <TextView
         android:text="Countdown Timer"
         android:layout_width="wrap_content"
@@ -85,22 +73,21 @@
         style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/happyTitle"
-        android:layout_alignStart="@+id/happyTitle"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:id="@+id/happyBar"
-        android:layout_alignEnd="@+id/happyValue"
-        android:indeterminate="false" />
-
-    <ProgressBar
-        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@+id/hungerTitle"
         android:layout_alignStart="@+id/happyTitle"
         android:layout_marginTop="21dp"
         android:id="@+id/hungerBar"
         android:layout_alignEnd="@+id/hungerValue" />
+
+    <ProgressBar
+        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp"
+        android:id="@+id/happyBar"
+        android:indeterminate="false"
+        android:layout_below="@+id/happyTitle"
+        android:layout_alignEnd="@+id/happyValue"
+        android:layout_alignStart="@+id/happyTitle" />
 
 </RelativeLayout>
