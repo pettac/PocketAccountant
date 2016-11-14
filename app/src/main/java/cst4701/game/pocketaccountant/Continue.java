@@ -4,6 +4,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -32,6 +33,11 @@ public class Continue extends AppCompatActivity {
         //set progress bar height
         happyBar.setScaleY(3f);
 
+        //assign variable to image view to hold accountant image
+        final ImageView accountantImage = (ImageView) findViewById(R.id.accountantImage);
+        //set initial accountant image
+        accountantImage.setBackgroundResource(R.drawable.happy);
+
 
         //assign variable to hunger bar
         final ProgressBar hungryBar = (ProgressBar) findViewById(R.id.hungerBar);
@@ -52,12 +58,19 @@ public class Continue extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 //show current value
                 timer.setText(Long.toString(millisUntilFinished / 1000));
+                if (happyValue > 69)
+                    accountantImage.setBackgroundResource(R.drawable.happy);
+                else if (happyValue > 29)
+                    accountantImage.setBackgroundResource(R.drawable.bored);
+                else if (happyValue > 0)
+                    accountantImage.setBackgroundResource(R.drawable.sad);
             }
 
             //what to do when count down finishes
             public void onFinish() {
                 //check if happiness or hunger go below 0
                 //if not then continue as normal and restart countdown
+
                 if ((happyValue-20)>0 && (hungerValue-20)>0){
                     //decrease hunger value and happy value by 10
                     hungerValue -= 20;
@@ -81,6 +94,8 @@ public class Continue extends AppCompatActivity {
 
                     hungryBar.setProgress(hungerValue-20);
                     hunger.setText(Integer.toString(hungerValue-20));
+
+                    accountantImage.setBackgroundResource(R.drawable.dead);
                 }
                 //if hunger <= 0 set hunger values to 0 and end countdown
                 else {
@@ -90,6 +105,8 @@ public class Continue extends AppCompatActivity {
 
                     happyBar.setProgress(happyValue-20);
                     happy.setText(Integer.toString(happyValue-20));
+
+                    accountantImage.setBackgroundResource(R.drawable.dead);
                 }
             }
         }.start();

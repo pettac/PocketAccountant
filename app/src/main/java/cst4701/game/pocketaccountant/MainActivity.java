@@ -28,5 +28,3 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
-
-//ignore me por favor
