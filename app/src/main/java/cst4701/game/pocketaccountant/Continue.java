@@ -1,5 +1,8 @@
 package cst4701.game.pocketaccountant;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ public class Continue extends AppCompatActivity {
     int hungerValue = 100;
     int happyValue = 100;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,12 +30,16 @@ public class Continue extends AppCompatActivity {
 
         //assign variable to Happy progress bar
         final ProgressBar happyBar = (ProgressBar) findViewById(R.id.happyBar);
+
         //set max progress bar value
         happyBar.setMax(100);
         //set starting progress bar value
         happyBar.setProgress(100);
         //set progress bar height
         happyBar.setScaleY(3f);
+        //set color of progress bar using hex value
+        happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
+                android.graphics.PorterDuff.Mode.SRC_IN);
 
         //assign variable to image view to hold accountant image
         final ImageView accountantImage = (ImageView) findViewById(R.id.accountantImage);
@@ -41,12 +49,16 @@ public class Continue extends AppCompatActivity {
 
         //assign variable to hunger bar
         final ProgressBar hungryBar = (ProgressBar) findViewById(R.id.hungerBar);
+
         //set max progress bar value
         hungryBar.setMax(100);
         //set starting progress bar value
         hungryBar.setProgress(100);
         //set progress bar height
         hungryBar.setScaleY(3f);
+        //set color of progress bar using hex value
+        hungryBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
+                android.graphics.PorterDuff.Mode.SRC_IN);
 
         //now countdown timer
         //CountDownTimer(x, y)
@@ -58,19 +70,47 @@ public class Continue extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 //show current value
                 timer.setText(Long.toString(millisUntilFinished / 1000));
-                if (happyValue > 69)
+
+                //check happy value and then change the accountant image for
+                //the corresponding value as well as the progress bar color.
+                //Progress bar cycles between Green, Orange, and Red
+                if (happyValue > 69) {
                     accountantImage.setBackgroundResource(R.drawable.happy);
-                else if (happyValue > 29)
+                    happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
+                            android.graphics.PorterDuff.Mode.SRC_IN);
+                }
+
+                else if (happyValue > 29) {
                     accountantImage.setBackgroundResource(R.drawable.bored);
-                else if (happyValue > 0)
+                    happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
+                            android.graphics.PorterDuff.Mode.SRC_IN);
+                }
+                else if (happyValue > 0) {
                     accountantImage.setBackgroundResource(R.drawable.sad);
+                    happyBar.getProgressDrawable().setColorFilter(Color.RED,
+                            android.graphics.PorterDuff.Mode.SRC_IN);
+                }
+
+                //check hunger value and then change the progress bar color.
+                //Progress bar cycles between Green, Orange, and Red
+                if (hungerValue > 69) {
+                    hungryBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
+                            android.graphics.PorterDuff.Mode.SRC_IN);
+                }
+                else if (hungerValue > 29) {
+                    hungryBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
+                            android.graphics.PorterDuff.Mode.SRC_IN);
+                }
+                else if (hungerValue > 0) {
+                    hungryBar.getProgressDrawable().setColorFilter(Color.RED,
+                            android.graphics.PorterDuff.Mode.SRC_IN);
+                }
             }
 
             //what to do when count down finishes
             public void onFinish() {
                 //check if happiness or hunger go below 0
                 //if not then continue as normal and restart countdown
-
                 if ((happyValue-20)>0 && (hungerValue-20)>0){
                     //decrease hunger value and happy value by 10
                     hungerValue -= 20;
@@ -95,6 +135,7 @@ public class Continue extends AppCompatActivity {
                     hungryBar.setProgress(hungerValue-20);
                     hunger.setText(Integer.toString(hungerValue-20));
 
+                    //game over, show dead accountant
                     accountantImage.setBackgroundResource(R.drawable.dead);
                 }
                 //if hunger <= 0 set hunger values to 0 and end countdown
@@ -106,6 +147,7 @@ public class Continue extends AppCompatActivity {
                     happyBar.setProgress(happyValue-20);
                     happy.setText(Integer.toString(happyValue-20));
 
+                    //game over, show dead accountant
                     accountantImage.setBackgroundResource(R.drawable.dead);
                 }
             }
@@ -129,6 +171,25 @@ public class Continue extends AppCompatActivity {
                     happyBar.setProgress(happyValue);
                     happy.setText(Integer.toString(happyValue));
                 }
+
+                //Same code to change image and colors as used in the countdown,
+                //but this allows the colors and image to change onClick instead
+                //of waiting for the next tick. Real time changes
+                if (happyValue > 69) {
+                    accountantImage.setBackgroundResource(R.drawable.happy);
+                    happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
+                            android.graphics.PorterDuff.Mode.SRC_IN);
+                }
+                else if (happyValue > 29) {
+                    accountantImage.setBackgroundResource(R.drawable.bored);
+                    happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
+                            android.graphics.PorterDuff.Mode.SRC_IN);
+                }
+                else if (happyValue > 0) {
+                    accountantImage.setBackgroundResource(R.drawable.sad);
+                    happyBar.getProgressDrawable().setColorFilter(Color.RED,
+                            android.graphics.PorterDuff.Mode.SRC_IN);
+                }
             }
         });
 
@@ -151,6 +212,21 @@ public class Continue extends AppCompatActivity {
                     hunger.setText(Integer.toString(hungerValue));
                 }
 
+                //Same code to change the colors as used in the countdown,
+                //but this allows the colors to change onClick instead
+                //of waiting for the next tick. Real time changes
+                if (hungerValue > 69) {
+                    hungryBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
+                            android.graphics.PorterDuff.Mode.SRC_IN);
+                }
+                else if (hungerValue > 29) {
+                    hungryBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
+                            android.graphics.PorterDuff.Mode.SRC_IN);
+                }
+                else if (hungerValue > 0) {
+                    hungryBar.getProgressDrawable().setColorFilter(Color.RED,
+                            android.graphics.PorterDuff.Mode.SRC_IN);
+                }
             }
         });
 
