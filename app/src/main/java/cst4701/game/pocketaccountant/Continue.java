@@ -5,6 +5,8 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -155,6 +157,10 @@ public class Continue extends AppCompatActivity {
         happyBar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+
+                Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                findViewById(R.id.accountantImage).startAnimation(shake);
+
                 //happy and hunger value can't exceed 100
                 //check what value will be when adding 20, if > 100
                 //reset happy value to 100 then update text and progress
@@ -193,8 +199,11 @@ public class Continue extends AppCompatActivity {
 
         //create listener for hunger bar
         hungryBar.setOnClickListener(new View.OnClickListener(){
+
             @Override
             public void onClick(View v){
+                Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                findViewById(R.id.accountantImage).startAnimation(shake);
                 //happy and hunger value can't exceed 100
                 //check what value will be when adding 20, if > 100
                 //reset happy value to 100 then update text and progress
