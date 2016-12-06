@@ -13,67 +13,6 @@
     tools:context="cst4701.game.pocketaccountant.Continue">
 
     <TextView
-        android:text="100"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/hungerValue"
-        android:textSize="24sp"
-        android:layout_alignBaseline="@+id/hungerTitle"
-        android:layout_alignStart="@+id/happyValue" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/happyTitle"
-        android:textSize="24sp"
-        android:text="Happiness:"
-        android:layout_marginStart="20dp"
-        android:layout_alignBaseline="@+id/happyValue"
-        android:layout_alignBottom="@+id/happyValue"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/happyValue"
-        android:textSize="24sp"
-        android:text="100"
-        android:layout_marginBottom="26dp"
-        android:layout_above="@+id/happyBar"
-        android:layout_alignEnd="@+id/countdownTimer" />
-
-    <TextView
-        android:text="Hunger:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/hungerTitle"
-        android:textSize="24sp"
-        android:layout_marginBottom="40dp"
-        android:layout_above="@+id/hungerBar"
-        android:layout_alignStart="@+id/happyTitle" />
-
-    <ProgressBar
-        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/happyBar"
-        android:indeterminate="false"
-        android:layout_marginBottom="30dp"
-        android:layout_above="@+id/hungerTitle"
-        android:layout_alignStart="@+id/happyTitle"
-        android:layout_alignEnd="@+id/happyValue" />
-
-    <ProgressBar
-        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/hungerBar"
-        android:layout_marginBottom="46dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/hungerTitle"
-        android:layout_alignEnd="@+id/hungerValue" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/countdownTimer"
@@ -88,5 +27,82 @@
         android:id="@+id/accountantImage"
         android:layout_below="@+id/countdownTimer"
         android:layout_toEndOf="@+id/happyTitle" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/energyIcon"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/countdownTimer" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/funIcon"
+        android:layout_marginBottom="16dp"
+        android:layout_above="@+id/energyIcon"
+        android:layout_toEndOf="@+id/countdownTimer" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/happyIcon"
+        android:layout_alignTop="@+id/funIcon"
+        android:layout_alignParentStart="true" />
+
+    <ProgressBar
+        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/happyBar"
+        android:indeterminate="false"
+        android:layout_alignBottom="@+id/funIcon"
+        android:layout_alignEnd="@+id/countdownTimer"
+        android:layout_alignTop="@+id/funIcon"
+        android:layout_toEndOf="@+id/happyIcon" />
+
+    <ProgressBar
+        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/funBar"
+        android:indeterminate="false"
+        android:layout_alignBottom="@+id/funIcon"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/funIcon"
+        android:layout_toEndOf="@+id/funIcon" />
+
+    <ProgressBar
+        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/energyBar"
+        android:indeterminate="false"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/energyIcon"
+        android:layout_below="@+id/funIcon"
+        android:layout_alignParentBottom="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/hungerIcon"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <ProgressBar
+        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:id="@+id/hungerBar"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/funIcon"
+        android:layout_alignEnd="@+id/countdownTimer"
+        android:layout_toEndOf="@+id/hungerIcon" />
 
 </RelativeLayout>
