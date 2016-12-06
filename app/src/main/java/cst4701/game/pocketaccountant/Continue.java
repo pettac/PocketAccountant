@@ -25,8 +25,8 @@ public class Continue extends AppCompatActivity {
 
         //assign variable to TextView objects
         final TextView timer = (TextView)findViewById(R.id.countdownTimer);
-        final TextView hunger = (TextView)findViewById(R.id.hungerValue);
-        final TextView happy = (TextView)findViewById(R.id.happyValue);
+        final ImageView hungerIcon = (ImageView)findViewById(R.id.hungerIcon);
+        final ImageView happyIcon = (ImageView)findViewById(R.id.happyIcon);
 
         //assign variable to Happy progress bar
         final ProgressBar happyBar = (ProgressBar) findViewById(R.id.happyBar);
@@ -121,8 +121,8 @@ public class Continue extends AppCompatActivity {
                     hungryBar.setProgress(hungerValue);
 
                     //change text to show current hunger and happy value
-                    hunger.setText(Integer.toString(hungerValue));
-                    happy.setText(Integer.toString(happyValue));
+                    //hunger.setText(Integer.toString(hungerValue));
+                    //happy.setText(Integer.toString(happyValue));
                     //restart countdown
                     this.start();
                 }
@@ -130,10 +130,10 @@ public class Continue extends AppCompatActivity {
                 else if ((happyValue-20) <= 0){
                     timer.setText("0");
                     happyBar.setProgress(0);
-                    happy.setText("0");
+                    //happy.setText("0");
 
                     hungryBar.setProgress(hungerValue-20);
-                    hunger.setText(Integer.toString(hungerValue-20));
+                    //hunger.setText(Integer.toString(hungerValue-20));
 
                     //game over, show dead accountant
                     accountantImage.setBackgroundResource(R.drawable.dead);
@@ -142,10 +142,10 @@ public class Continue extends AppCompatActivity {
                 else {
                     timer.setText("0");
                     hungryBar.setProgress(0);
-                    hunger.setText("0");
+                    //hunger.setText("0");
 
                     happyBar.setProgress(happyValue-20);
-                    happy.setText(Integer.toString(happyValue-20));
+                    //happy.setText(Integer.toString(happyValue-20));
 
                     //game over, show dead accountant
                     accountantImage.setBackgroundResource(R.drawable.dead);
@@ -154,7 +154,7 @@ public class Continue extends AppCompatActivity {
         }.start();
 
         //create listener for happy bar
-        happyBar.setOnClickListener(new View.OnClickListener(){
+        happyIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
 
@@ -168,12 +168,12 @@ public class Continue extends AppCompatActivity {
                 if ((happyValue+20)<=100){
                     happyValue += 20;
                     happyBar.setProgress(happyValue);
-                    happy.setText(Integer.toString(happyValue));
+                    //happy.setText(Integer.toString(happyValue));
                 }
                 else {
                     happyValue = 100;
                     happyBar.setProgress(happyValue);
-                    happy.setText(Integer.toString(happyValue));
+                    //happy.setText(Integer.toString(happyValue));
                 }
 
                 //Same code to change image and colors as used in the countdown,
@@ -198,7 +198,7 @@ public class Continue extends AppCompatActivity {
         });
 
         //create listener for hunger bar
-        hungryBar.setOnClickListener(new View.OnClickListener(){
+        hungerIcon.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v){
@@ -211,12 +211,12 @@ public class Continue extends AppCompatActivity {
                 if ((hungerValue+20)<=100){
                     hungerValue += 20;
                     hungryBar.setProgress(hungerValue);
-                    hunger.setText(Integer.toString(hungerValue));
+                    //hunger.setText(Integer.toString(hungerValue));
                 }
                 else {
                     hungerValue = 100;
                     hungryBar.setProgress(hungerValue);
-                    hunger.setText(Integer.toString(hungerValue));
+                    //hunger.setText(Integer.toString(hungerValue));
                 }
 
                 //Same code to change the colors as used in the countdown,
