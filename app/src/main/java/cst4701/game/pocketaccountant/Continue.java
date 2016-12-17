@@ -14,9 +14,27 @@ import android.widget.TextView;
 public class Continue extends AppCompatActivity {
 
     //initial hunger and happy values
-    int hungerValue = 100;
-    int happyValue = 100;
+    private int hungerValue = 100;
+    private int happyValue = 100;
+    private int ageCounter = 0;
 
+    /*
+    TO DO LIST:
+        - Values that need to be saved into the DB - status values... happy, hunger, fun, energy.
+        - What is his current age?
+            - Kid
+            - Young Adult
+            - Adult
+            - Old
+        - How to calculate his age?
+            - Maybe have a counter that adds 1 every cycle and then at set numbers he evolves
+            - Between 0 and 17 he is kid
+            - Between 18 and 24 is a young adult
+            - Between 25 and 64 is an adult
+            - 65+ is an old fart
+            Something like that
+        -
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +62,7 @@ public class Continue extends AppCompatActivity {
         //assign variable to image view to hold accountant image
         final ImageView accountantImage = (ImageView) findViewById(R.id.accountantImage);
         //set initial accountant image
-        accountantImage.setBackgroundResource(R.drawable.happy);
+        accountantImage.setBackgroundResource(R.drawable.happyk);
 
 
         //assign variable to hunger bar
@@ -64,47 +82,17 @@ public class Continue extends AppCompatActivity {
         //CountDownTimer(x, y)
         //x = starting time in ms
         //y = increment value in ms
+
+
         new CountDownTimer(5000, 1000) {
 
             //what to during each tick of the timer
             public void onTick(long millisUntilFinished) {
-                //show current value
+                GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue,
+                        happyBar, hungryBar, accountantImage);
                 timer.setText(Long.toString(millisUntilFinished / 1000));
-
-                //check happy value and then change the accountant image for
-                //the corresponding value as well as the progress bar color.
-                //Progress bar cycles between Green, Orange, and Red
-                if (happyValue > 69) {
-                    accountantImage.setBackgroundResource(R.drawable.happy);
-                    happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
-                            android.graphics.PorterDuff.Mode.SRC_IN);
-                }
-
-                else if (happyValue > 29) {
-                    accountantImage.setBackgroundResource(R.drawable.bored);
-                    happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
-                            android.graphics.PorterDuff.Mode.SRC_IN);
-                }
-                else if (happyValue > 0) {
-                    accountantImage.setBackgroundResource(R.drawable.sad);
-                    happyBar.getProgressDrawable().setColorFilter(Color.RED,
-                            android.graphics.PorterDuff.Mode.SRC_IN);
-                }
-
-                //check hunger value and then change the progress bar color.
-                //Progress bar cycles between Green, Orange, and Red
-                if (hungerValue > 69) {
-                    hungryBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
-                            android.graphics.PorterDuff.Mode.SRC_IN);
-                }
-                else if (hungerValue > 29) {
-                    hungryBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
-                            android.graphics.PorterDuff.Mode.SRC_IN);
-                }
-                else if (hungerValue > 0) {
-                    hungryBar.getProgressDrawable().setColorFilter(Color.RED,
-                            android.graphics.PorterDuff.Mode.SRC_IN);
-                }
+                engine.setAge();
+                ageCounter++;
             }
 
             //what to do when count down finishes
@@ -136,7 +124,8 @@ public class Continue extends AppCompatActivity {
                     //hunger.setText(Integer.toString(hungerValue-20));
 
                     //game over, show dead accountant
-                    accountantImage.setBackgroundResource(R.drawable.dead);
+                    //fix this to show correct accountant
+                    accountantImage.setBackgroundResource(R.drawable.deadk);
                 }
                 //if hunger <= 0 set hunger values to 0 and end countdown
                 else {
@@ -148,7 +137,8 @@ public class Continue extends AppCompatActivity {
                     //happy.setText(Integer.toString(happyValue-20));
 
                     //game over, show dead accountant
-                    accountantImage.setBackgroundResource(R.drawable.dead);
+                    //fix this to show correct accountant
+                    accountantImage.setBackgroundResource(R.drawable.deadk);
                 }
             }
         }.start();
@@ -176,30 +166,16 @@ public class Continue extends AppCompatActivity {
                     //happy.setText(Integer.toString(happyValue));
                 }
 
-                //Same code to change image and colors as used in the countdown,
-                //but this allows the colors and image to change onClick instead
-                //of waiting for the next tick. Real time changes
-                if (happyValue > 69) {
-                    accountantImage.setBackgroundResource(R.drawable.happy);
-                    happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
-                            android.graphics.PorterDuff.Mode.SRC_IN);
-                }
-                else if (happyValue > 29) {
-                    accountantImage.setBackgroundResource(R.drawable.bored);
-                    happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
-                            android.graphics.PorterDuff.Mode.SRC_IN);
-                }
-                else if (happyValue > 0) {
-                    accountantImage.setBackgroundResource(R.drawable.sad);
-                    happyBar.getProgressDrawable().setColorFilter(Color.RED,
-                            android.graphics.PorterDuff.Mode.SRC_IN);
-                }
+                GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue,
+                        happyBar, hungryBar, accountantImage);
+
+                engine.setAge();
+
             }
         });
 
         //create listener for hunger bar
         hungerIcon.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View v){
                 Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
@@ -218,25 +194,15 @@ public class Continue extends AppCompatActivity {
                     hungryBar.setProgress(hungerValue);
                     //hunger.setText(Integer.toString(hungerValue));
                 }
+                GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue,
+                        happyBar, hungryBar, accountantImage);
 
-                //Same code to change the colors as used in the countdown,
-                //but this allows the colors to change onClick instead
-                //of waiting for the next tick. Real time changes
-                if (hungerValue > 69) {
-                    hungryBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
-                            android.graphics.PorterDuff.Mode.SRC_IN);
-                }
-                else if (hungerValue > 29) {
-                    hungryBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
-                            android.graphics.PorterDuff.Mode.SRC_IN);
-                }
-                else if (hungerValue > 0) {
-                    hungryBar.getProgressDrawable().setColorFilter(Color.RED,
-                            android.graphics.PorterDuff.Mode.SRC_IN);
-                }
+                engine.setAge();
+
             }
         });
 
     }
+
 
 }
