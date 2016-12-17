@@ -21,7 +21,6 @@ public class Continue extends AppCompatActivity {
     private int ageCounter = 0;
 
     /*
-    TO DO LIST:
         - Values that need to be saved into the DB - status values... happy, hunger, fun, energy.
         - What is his current age?
             - Kid
@@ -35,7 +34,14 @@ public class Continue extends AppCompatActivity {
             - Between 25 and 64 is an adult
             - 65+ is an old fart
             Something like that
-        -
+        TO DO:
+            - Fix progress bars not turning red
+            - Add icons for energy, fun, and happy
+            - Add accountant image
+            - Make accountant pace back and forth on screen
+            - Set up database
+                - This would be nice to do but if we run out of time I think he will
+                  accept the game with everything else
      */
 
     @Override
