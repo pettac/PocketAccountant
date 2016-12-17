@@ -6,21 +6,26 @@ import android.widget.ProgressBar;
 
 public class GameEngine {
 
-    private int ageCounter, happyValue, hungerValue;
-    private ProgressBar happyBar, hungerBar;
+    private int ageCounter, happyValue, hungerValue, energyValue, funValue;
+    private ProgressBar happyBar, hungerBar, energyBar, funBar;
     private ImageView accountantImage;
 
-    public GameEngine(int ageCounter, int happyValue, int hungerValue, ProgressBar happyBar,
-                      ProgressBar hungerBar, ImageView accountantImage){
+    public GameEngine(int ageCounter, int happyValue, int hungerValue, int energyValue, int funValue,
+                      ProgressBar happyBar, ProgressBar hungerBar, ProgressBar energyBar,
+                      ProgressBar funBar, ImageView accountantImage){
         this.ageCounter = ageCounter;
         this.happyValue = happyValue;
         this.hungerValue = hungerValue;
+        this.energyValue = energyValue;
+        this.funValue = funValue;
         this.happyBar = happyBar;
         this.hungerBar = hungerBar;
+        this.energyBar = energyBar;
+        this.funBar = funBar;
         this.accountantImage = accountantImage;
     }
 
-    public void happyCheck(int ageCode){
+    private void happyCheck(int ageCode){
         //check happy value and then change the accountant image for
         //the corresponding value as well as the progress bar color.
         //Progress bar cycles between Green, Orange, and Red
@@ -99,7 +104,7 @@ public class GameEngine {
 
     }
 
-    public void hungerCheck(){
+    private void hungerCheck(){
         //check hunger value and then change the progress bar color.
         //Progress bar cycles between Green, Orange, and Red
         if (hungerValue > 69) {
@@ -116,6 +121,36 @@ public class GameEngine {
         }
     }
 
+    private void funCheck(){
+        if (funValue > 69) {
+            funBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
+                    android.graphics.PorterDuff.Mode.SRC_IN);
+        }
+        else if (funValue > 29) {
+            funBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
+                    android.graphics.PorterDuff.Mode.SRC_IN);
+        }
+        else if (funValue > 0) {
+            funBar.getProgressDrawable().setColorFilter(Color.RED,
+                    android.graphics.PorterDuff.Mode.SRC_IN);
+        }
+    }
+
+    private void energyCheck(){
+        if (energyValue > 69) {
+            energyBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
+                    android.graphics.PorterDuff.Mode.SRC_IN);
+        }
+        else if (energyValue > 29) {
+            energyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
+                    android.graphics.PorterDuff.Mode.SRC_IN);
+        }
+        else if (energyValue > 0) {
+            energyBar.getProgressDrawable().setColorFilter(Color.RED,
+                    android.graphics.PorterDuff.Mode.SRC_IN);
+        }
+    }
+
     /*
         Age Codes:
             1 = kid
@@ -128,18 +163,26 @@ public class GameEngine {
         if (ageCounter < 18) {
             happyCheck(1);
             hungerCheck();
+            funCheck();
+            energyCheck();
         }
         else if (ageCounter < 25) {
             happyCheck(2);
             hungerCheck();
+            funCheck();
+            energyCheck();
         }
         else if (ageCounter < 65) {
             happyCheck(3);
             hungerCheck();
+            funCheck();
+            energyCheck();
         }
         else {
             happyCheck(4);
             hungerCheck();
+            funCheck();
+            energyCheck();
         }
     }
 }
