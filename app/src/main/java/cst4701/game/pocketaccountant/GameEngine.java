@@ -1,6 +1,10 @@
 package cst4701.game.pocketaccountant;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
+import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -184,5 +188,31 @@ public class GameEngine {
             funCheck();
             energyCheck();
         }
+    }
+
+    public void animation(Context context, Activity activity){
+        int [] coords = {0,0};
+        accountantImage.getLocationOnScreen(coords);
+
+        int top = coords[1];
+        int bottom = coords[1] + accountantImage.getHeight();
+
+
+        //float x = accountantImage.getTop();
+        //float y = accountantImage.getLeft();
+        //float width = accountantImage.getWidth();
+        //float height = accountantImage.getHeight();
+
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        int heightScreen = metrics.heightPixels;
+        int widthScreen = metrics.widthPixels;
+
+        System.out.println("X: "+top);
+        System.out.println("Y: "+bottom);
+        //System.out.println("Width: "+width);
+        //System.out.println("Height: "+height);
+        System.out.println("Screen Width: "+widthScreen);
+        System.out.println("Screen Height: "+heightScreen);
+
     }
 }

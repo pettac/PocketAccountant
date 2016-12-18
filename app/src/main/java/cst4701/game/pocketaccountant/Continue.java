@@ -1,15 +1,25 @@
 package cst4701.game.pocketaccountant;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.ContextThemeWrapper;
+import android.support.v7.widget.PopupMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public class Continue extends AppCompatActivity {
 
@@ -36,7 +46,7 @@ public class Continue extends AppCompatActivity {
             Something like that
         TO DO:
             - Fix progress bars not turning red
-            - Add icons for energy, fun, and happy
+            - Add icons for fun and happy
             - Add accountant image
             - Make accountant pace back and forth on screen
             - Set up database
@@ -101,7 +111,18 @@ public class Continue extends AppCompatActivity {
         final ImageView accountantImage = (ImageView) findViewById(R.id.accountantImage);
         //set initial accountant image
         accountantImage.setBackgroundResource(R.drawable.happyk);
+        /*
 
+        Animation animSlide = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide);
+
+        // Start the animation like this
+        accountantImage.startAnimation(animSlide);
+        */
+        GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
+                funValue, happyBar, hungryBar, energyBar, funBar, accountantImage);
+
+        engine.animation(this.getApplicationContext(), this);
 
         new CountDownTimer(5000, 1000) {
 
@@ -111,6 +132,7 @@ public class Continue extends AppCompatActivity {
                         funValue, happyBar, hungryBar, energyBar, funBar, accountantImage);
                 timer.setText(Long.toString(millisUntilFinished / 1000));
                 engine.setAge();
+
                 ageCounter++;
             }
 
@@ -223,6 +245,9 @@ public class Continue extends AppCompatActivity {
         hungerIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+
+                showPopupWindow(v, v.getContext());
+                /*
                 Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
                 findViewById(R.id.accountantImage).startAnimation(shake);
                 //happy and hunger value can't exceed 100
@@ -243,6 +268,7 @@ public class Continue extends AppCompatActivity {
                         funValue, happyBar, hungryBar, energyBar, funBar, accountantImage);
 
                 engine.setAge();
+                */
 
             }
         });
@@ -290,8 +316,37 @@ public class Continue extends AppCompatActivity {
 
             }
         });
-
     }
 
+    //https://readyandroid.wordpress.com/popup-menu-with-icon/
+    int showPopupWindow(View view, Context context){
+        Context wrapper = new ContextThemeWrapper(context, R.style.PopupMenu);
+        PopupMenu popup = new PopupMenu(wrapper, view);
+        try {
+            Field[] fields = popup.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                if ("mPopup".equals(field.getName())) {
+                    field.setAccessible(true);
+                    Object menuPopupHelper = field.get(popup);
+                    Class<?> classPopupHelper = Class.forName(menuPopupHelper.getClass().getName());
+                    Method setForceIcons = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
+                    setForceIcons.invoke(menuPopupHelper, true);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(getApplicationContext(), "You Clicked : " + item.getTitle(),  Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        popup.show();
+        return 0;
+    }
 }
