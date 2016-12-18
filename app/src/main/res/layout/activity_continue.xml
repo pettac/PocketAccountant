@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context="cst4701.game.pocketaccountant.Continue"
+    tools:context="cst4701.game.pocketaccountant.GameActivity"
     android:weightSum="1">
 
 
@@ -66,14 +66,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="66dp"
-        android:id="@+id/accountantImage"
-        android:layout_below="@+id/countdownTimer"
-        android:layout_centerHorizontal="true" />
-
     <ProgressBar
         style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
         android:layout_height="wrap_content"
@@ -103,6 +95,14 @@
         android:layout_marginStart="13dp"
         android:layout_alignTop="@+id/hungerIcon"
         android:layout_toEndOf="@+id/hungerBar" />
+
+    <ImageView
+        android:layout_marginTop="37dp"
+        android:id="@+id/accountantImage"
+        android:layout_width="175dp"
+        android:layout_below="@+id/countdownTimer"
+        android:layout_centerHorizontal="true"
+        android:layout_height="300dp" />
     <!--
      android:layout_alignParentBottom="true"
         android:layout_below="@+id/funIcon"

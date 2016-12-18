@@ -1,5 +1,6 @@
 package cst4701.game.pocketaccountant;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -14,17 +15,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.io.File;
 
 public class GameActivity extends AppCompatActivity {
 
     //initial hunger and happy values
-    private int hungerValue = 100;
-    private int happyValue = 100;
-    private int funValue = 100;
-    private int energyValue= 100;
-    private int ageCounter = 0;
+    private int hungerValue;
+    private int happyValue;
+    private int funValue;
+    private int energyValue;
+    private int ageCounter;
+
+
 
     /*
         - Values that need to be saved into the DB - status values... happy, hunger, fun, energy.
@@ -43,9 +45,9 @@ public class GameActivity extends AppCompatActivity {
         TO DO:
             - Fix progress bars not turning red
             - Add icons for fun and happy
-            - Add accountant image
+           x - Add accountant image
             - Make accountant pace back and forth on screen
-            - Set up database
+           x - Set up database
                 - This would be nice to do but if we run out of time I think he will
                   accept the game with everything else
      */
@@ -54,6 +56,13 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_continue);
+
+        SharedPreferences values = getApplicationContext().getSharedPreferences("values", 0);
+        happyValue = values.getInt("happy", 100);
+        hungerValue = values.getInt("hunger", 100);
+        funValue = values.getInt("fun", 100);
+        energyValue = values.getInt("energy", 100);
+        ageCounter = values.getInt("age", 0);
 
         //assign variable to TextView objects
         final TextView timer = (TextView)findViewById(R.id.countdownTimer);
@@ -106,7 +115,7 @@ public class GameActivity extends AppCompatActivity {
         //assign variable to image view to hold accountant image
         final ImageView accountantImage = (ImageView) findViewById(R.id.accountantImage);
         //set initial accountant image
-        accountantImage.setBackgroundResource(R.drawable.happyk);
+        accountantImage.setBackgroundResource(R.drawable.baby_accountant_happy);
         /*
 
         Animation animSlide = AnimationUtils.loadAnimation(getApplicationContext(),
@@ -118,7 +127,7 @@ public class GameActivity extends AppCompatActivity {
         GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
                 funValue, happyBar, hungerBar, energyBar, funBar, accountantImage);
 
-        engine.animation(this.getApplicationContext(), this);
+        //engine.animation(this.getApplicationContext(), this);
 
         new CountDownTimer(5000, 1000) {
 
@@ -314,7 +323,36 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+        SharedPreferences settings = getApplicationContext().getSharedPreferences("values", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("happy", happyValue);
+        editor.putInt("hunger", hungerValue);
+        editor.putInt("fun", funValue);
+        editor.putInt("energy", energyValue);
+        editor.putInt("age", ageCounter);
+
+        editor.apply();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        SharedPreferences values = getApplicationContext().getSharedPreferences("values", 0);
+        happyValue = values.getInt("happy", 100);
+        hungerValue = values.getInt("hunger", 100);
+        funValue = values.getInt("fun", 100);
+        energyValue = values.getInt("energy", 100);
+        ageCounter = values.getInt("age", 0);
+
+    }
     /*
+
+    Popup Menu code
+
     //https://readyandroid.wordpress.com/popup-menu-with-icon/
     int showPopupWindow(View view, ProgressBar hungryBar){
         PopupMenu popup = new PopupMenu(this, view);

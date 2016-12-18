@@ -1,10 +1,6 @@
 package cst4701.game.pocketaccountant;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
-import android.util.DisplayMetrics;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -35,54 +31,54 @@ public class GameEngine {
         //Progress bar cycles between Green, Orange, and Red
         if (ageCode == 1) {
             if (happyValue > 69) {
-                accountantImage.setBackgroundResource(R.drawable.happyk);
+                accountantImage.setBackgroundResource(R.drawable.baby_accountant_happy);
                 happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
                         android.graphics.PorterDuff.Mode.SRC_IN);
             }
 
             else if (happyValue > 29) {
-                accountantImage.setBackgroundResource(R.drawable.boredk);
+                accountantImage.setBackgroundResource(R.drawable.baby_accountant_neutral);
                 happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
                         android.graphics.PorterDuff.Mode.SRC_IN);
             }
             else if (happyValue > 0) {
-                accountantImage.setBackgroundResource(R.drawable.sadk);
+                accountantImage.setBackgroundResource(R.drawable.baby_accountant_sad);
                 happyBar.getProgressDrawable().setColorFilter(Color.RED,
                         android.graphics.PorterDuff.Mode.SRC_IN);
             }
         }
         else if (ageCode == 2) {
             if (happyValue > 69) {
-                accountantImage.setBackgroundResource(R.drawable.happyya);
+                accountantImage.setBackgroundResource(R.drawable.teen_accountant_happy);
                 happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
                         android.graphics.PorterDuff.Mode.SRC_IN);
             }
 
             else if (happyValue > 29) {
-                accountantImage.setBackgroundResource(R.drawable.boredya);
+                accountantImage.setBackgroundResource(R.drawable.teen_accountant_neutral);
                 happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
                         android.graphics.PorterDuff.Mode.SRC_IN);
             }
             else if (happyValue > 0) {
-                accountantImage.setBackgroundResource(R.drawable.sadya);
+                accountantImage.setBackgroundResource(R.drawable.teen_accountant_sad);
                 happyBar.getProgressDrawable().setColorFilter(Color.RED,
                         android.graphics.PorterDuff.Mode.SRC_IN);
             }
         }
         else if (ageCode == 3) {
             if (happyValue > 69) {
-                accountantImage.setBackgroundResource(R.drawable.happya);
+                accountantImage.setBackgroundResource(R.drawable.adult_acct_happy);
                 happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
                         android.graphics.PorterDuff.Mode.SRC_IN);
             }
 
             else if (happyValue > 29) {
-                accountantImage.setBackgroundResource(R.drawable.boreda);
+                accountantImage.setBackgroundResource(R.drawable.adult_acct_neutral);
                 happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
                         android.graphics.PorterDuff.Mode.SRC_IN);
             }
             else if (happyValue > 0) {
-                accountantImage.setBackgroundResource(R.drawable.sada);
+                accountantImage.setBackgroundResource(R.drawable.adult_acct_sad);
                 happyBar.getProgressDrawable().setColorFilter(Color.RED,
                         android.graphics.PorterDuff.Mode.SRC_IN);
             }
@@ -157,26 +153,26 @@ public class GameEngine {
 
     /*
         Age Codes:
-            1 = kid
-            2 = young adult
+            1 = baby
+            2 = teen
             3 = adult
             4 = old
      */
 
     public void setAge(){
-        if (ageCounter < 18) {
+        if (ageCounter < 20) {
             happyCheck(1);
             hungerCheck();
             funCheck();
             energyCheck();
         }
-        else if (ageCounter < 25) {
+        else if (ageCounter < 40) {
             happyCheck(2);
             hungerCheck();
             funCheck();
             energyCheck();
         }
-        else if (ageCounter < 65) {
+        else if (ageCounter < 60) {
             happyCheck(3);
             hungerCheck();
             funCheck();
@@ -188,31 +184,5 @@ public class GameEngine {
             funCheck();
             energyCheck();
         }
-    }
-
-    public void animation(Context context, Activity activity){
-        int [] coords = {0,0};
-        accountantImage.getLocationOnScreen(coords);
-
-        int top = coords[1];
-        int bottom = coords[1] + accountantImage.getHeight();
-
-
-        //float x = accountantImage.getTop();
-        //float y = accountantImage.getLeft();
-        //float width = accountantImage.getWidth();
-        //float height = accountantImage.getHeight();
-
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        int heightScreen = metrics.heightPixels;
-        int widthScreen = metrics.widthPixels;
-
-        System.out.println("X: "+top);
-        System.out.println("Y: "+bottom);
-        //System.out.println("Width: "+width);
-        //System.out.println("Height: "+height);
-        System.out.println("Screen Width: "+widthScreen);
-        System.out.println("Screen Height: "+heightScreen);
-
     }
 }

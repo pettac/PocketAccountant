@@ -16,8 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Settings" />
-        <activity android:name=".Continue" />
-        <activity android:name=".NewGame"></activity>
+        <activity android:name=".GameActivity" />
     </application>
 
 </manifest>
