@@ -1,13 +1,9 @@
 package cst4701.game.pocketaccountant;
 
-import android.content.ContentValues;
-import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +17,7 @@ import android.widget.Toast;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-public class Continue extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
 
     //initial hunger and happy values
     private int hungerValue = 100;
@@ -73,7 +69,7 @@ public class Continue extends AppCompatActivity {
         //set max progress bar value
         happyBar.setMax(100);
         //set starting progress bar value
-        happyBar.setProgress(100);
+        happyBar.setProgress(happyValue);
         //set progress bar height
         happyBar.setScaleY(3f);
         //set color of progress bar using hex value
@@ -81,28 +77,28 @@ public class Continue extends AppCompatActivity {
                 android.graphics.PorterDuff.Mode.SRC_IN);
 
         //assign variable to hunger bar
-        final ProgressBar hungryBar = (ProgressBar) findViewById(R.id.hungerBar);
+        final ProgressBar hungerBar = (ProgressBar) findViewById(R.id.hungerBar);
 
         //set max progress bar value
-        hungryBar.setMax(100);
+        hungerBar.setMax(100);
         //set starting progress bar value
-        hungryBar.setProgress(100);
+        hungerBar.setProgress(hungerValue);
         //set progress bar height
-        hungryBar.setScaleY(3f);
+        hungerBar.setScaleY(3f);
         //set color of progress bar using hex value
-        hungryBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
+        hungerBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
                 android.graphics.PorterDuff.Mode.SRC_IN);
 
         final ProgressBar funBar = (ProgressBar) findViewById(R.id.funBar);
         funBar.setMax(100);
-        funBar.setProgress(100);
+        funBar.setProgress(funValue);
         funBar.setScaleY(3f);
         funBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
                 android.graphics.PorterDuff.Mode.SRC_IN);
 
         final ProgressBar energyBar = (ProgressBar) findViewById(R.id.energyBar);
         energyBar.setMax(100);
-        energyBar.setProgress(100);
+        energyBar.setProgress(energyValue);
         energyBar.setScaleY(3f);
         energyBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
                 android.graphics.PorterDuff.Mode.SRC_IN);
@@ -120,7 +116,7 @@ public class Continue extends AppCompatActivity {
         accountantImage.startAnimation(animSlide);
         */
         GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
-                funValue, happyBar, hungryBar, energyBar, funBar, accountantImage);
+                funValue, happyBar, hungerBar, energyBar, funBar, accountantImage);
 
         engine.animation(this.getApplicationContext(), this);
 
@@ -129,7 +125,7 @@ public class Continue extends AppCompatActivity {
             //what to during each tick of the timer
             public void onTick(long millisUntilFinished) {
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
-                        funValue, happyBar, hungryBar, energyBar, funBar, accountantImage);
+                        funValue, happyBar, hungerBar, energyBar, funBar, accountantImage);
                 timer.setText(Long.toString(millisUntilFinished / 1000));
                 engine.setAge();
 
@@ -149,7 +145,7 @@ public class Continue extends AppCompatActivity {
 
                     //set progress bars to current hunger, happy, fun, and energy value
                     happyBar.setProgress(happyValue);
-                    hungryBar.setProgress(hungerValue);
+                    hungerBar.setProgress(hungerValue);
                     funBar.setProgress(funValue);
                     energyBar.setProgress(energyValue);
 
@@ -162,18 +158,18 @@ public class Continue extends AppCompatActivity {
                     timer.setText("0");
                     happyBar.setProgress(0);
 
-                    hungryBar.setProgress(hungerValue-20);
+                    hungerBar.setProgress(hungerValue-20);
                     funBar.setProgress(funValue-20);
                     energyBar.setProgress(energyValue-20);
 
                     //game over, show dead accountant
                     //fix this to show correct accountant
-                    accountantImage.setBackgroundResource(R.drawable.deadk);
+                    accountantImage.setBackgroundResource(R.drawable.tombstone);
                 }
                 //if hunger <= 0 set hunger values to 0 and end countdown
                 else if ((hungerValue-20) <= 0) {
                     timer.setText("0");
-                    hungryBar.setProgress(0);
+                    hungerBar.setProgress(0);
 
                     happyBar.setProgress(happyValue-20);
                     funBar.setProgress(funValue-20);
@@ -181,7 +177,7 @@ public class Continue extends AppCompatActivity {
 
                     //game over, show dead accountant
                     //fix this to show correct accountant
-                    accountantImage.setBackgroundResource(R.drawable.deadk);
+                    accountantImage.setBackgroundResource(R.drawable.tombstone);
                 }
 
                 //if fun <=0 set fun values to 0 and end countdown
@@ -190,10 +186,10 @@ public class Continue extends AppCompatActivity {
                     funBar.setProgress(0);
 
                     happyBar.setProgress(happyValue-20);
-                    hungryBar.setProgress(hungerValue-20);
+                    hungerBar.setProgress(hungerValue-20);
                     energyBar.setProgress(energyValue-20);
 
-                    accountantImage.setBackgroundResource(R.drawable.deadk);
+                    accountantImage.setBackgroundResource(R.drawable.tombstone);
                 }
 
                 //if energy <=0 set fun values to 0 and end countdown
@@ -202,10 +198,10 @@ public class Continue extends AppCompatActivity {
                     energyBar.setProgress(0);
 
                     happyBar.setProgress(happyValue-20);
-                    hungryBar.setProgress(hungerValue-20);
+                    hungerBar.setProgress(hungerValue-20);
                     funBar.setProgress(funValue-20);
 
-                    accountantImage.setBackgroundResource(R.drawable.deadk);
+                    accountantImage.setBackgroundResource(R.drawable.tombstone);
                 }
             }
         }.start();
@@ -234,7 +230,7 @@ public class Continue extends AppCompatActivity {
                 }
 
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
-                        funValue, happyBar, hungryBar, energyBar, funBar, accountantImage);
+                        funValue, happyBar, hungerBar, energyBar, funBar, accountantImage);
 
                 engine.setAge();
 
@@ -246,8 +242,8 @@ public class Continue extends AppCompatActivity {
             @Override
             public void onClick(View v){
 
-                showPopupWindow(v, v.getContext());
-                /*
+                //showPopupWindow(v, hungryBar);
+
                 Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
                 findViewById(R.id.accountantImage).startAnimation(shake);
                 //happy and hunger value can't exceed 100
@@ -256,19 +252,19 @@ public class Continue extends AppCompatActivity {
                 //bar to reflect new value
                 if ((hungerValue+20)<=100){
                     hungerValue += 20;
-                    hungryBar.setProgress(hungerValue);
+                    hungerBar.setProgress(hungerValue);
                     //hunger.setText(Integer.toString(hungerValue));
                 }
                 else {
                     hungerValue = 100;
-                    hungryBar.setProgress(hungerValue);
+                    hungerBar.setProgress(hungerValue);
                     //hunger.setText(Integer.toString(hungerValue));
                 }
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
-                        funValue, happyBar, hungryBar, energyBar, funBar, accountantImage);
+                        funValue, happyBar, hungerBar, energyBar, funBar, accountantImage);
 
                 engine.setAge();
-                */
+
 
             }
         });
@@ -288,7 +284,7 @@ public class Continue extends AppCompatActivity {
                     funBar.setProgress(funValue);
                 }
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
-                        funValue, happyBar, hungryBar, energyBar, funBar, accountantImage);
+                        funValue, happyBar, hungerBar, energyBar, funBar, accountantImage);
 
                 engine.setAge();
 
@@ -310,7 +306,7 @@ public class Continue extends AppCompatActivity {
                     energyBar.setProgress(energyValue);
                 }
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
-                        funValue, happyBar, hungryBar, energyBar, funBar, accountantImage);
+                        funValue, happyBar, hungerBar, energyBar, funBar, accountantImage);
 
                 engine.setAge();
 
@@ -318,10 +314,10 @@ public class Continue extends AppCompatActivity {
         });
     }
 
+    /*
     //https://readyandroid.wordpress.com/popup-menu-with-icon/
-    int showPopupWindow(View view, Context context){
-        Context wrapper = new ContextThemeWrapper(context, R.style.PopupMenu);
-        PopupMenu popup = new PopupMenu(wrapper, view);
+    int showPopupWindow(View view, ProgressBar hungryBar){
+        PopupMenu popup = new PopupMenu(this, view);
         try {
             Field[] fields = popup.getClass().getDeclaredFields();
             for (Field field : fields) {
@@ -340,13 +336,16 @@ public class Continue extends AppCompatActivity {
 
         popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
             public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(getApplicationContext(), "You Clicked : " + item.getTitle(),  Toast.LENGTH_SHORT).show();
+                //setHungerMenuChoice(item.getTitle().toString());
+                //Toast.makeText(getApplicationContext(), "You Clicked : " + item.getTitle(),  Toast.LENGTH_SHORT).show();
+
+
                 return true;
             }
         });
         popup.show();
         return 0;
     }
+    */
 }
