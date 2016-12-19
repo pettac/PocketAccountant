@@ -32,6 +32,9 @@ public class GameActivity extends AppCompatActivity {
     private int ageCounter;
 
     ProgressBar hungerBar;
+    ProgressBar happyBar;
+    ProgressBar hygieneBar;
+    ProgressBar energyBar;
     /*
         - Values that need to be saved into the DB - status values... happy, hunger, fun, energy.
         - What is his current age?
@@ -74,11 +77,11 @@ public class GameActivity extends AppCompatActivity {
 
         final ImageView hungerIcon = (ImageView)findViewById(R.id.hungerIcon);
         final ImageView happyIcon = (ImageView)findViewById(R.id.happyIcon);
-        final ImageView funIcon = (ImageView) findViewById(R.id.hygieneIcon);
+        final ImageView hygieneIcon = (ImageView) findViewById(R.id.hygieneIcon);
         final ImageView energyIcon = (ImageView) findViewById(R.id.energyIcon);
 
         //assign variable to Happy progress bar
-        final ProgressBar happyBar = (ProgressBar) findViewById(R.id.happyBar);
+        happyBar = (ProgressBar) findViewById(R.id.happyBar);
 
         //set max progress bar value
         happyBar.setMax(100);
@@ -103,14 +106,14 @@ public class GameActivity extends AppCompatActivity {
         hungerBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
                 android.graphics.PorterDuff.Mode.SRC_IN);
 
-        final ProgressBar hygieneBar = (ProgressBar) findViewById(R.id.hygieneBar);
+        hygieneBar = (ProgressBar) findViewById(R.id.hygieneBar);
         hygieneBar.setMax(100);
         hygieneBar.setProgress(hygieneValue);
         hygieneBar.setScaleY(3f);
         hygieneBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
                 android.graphics.PorterDuff.Mode.SRC_IN);
 
-        final ProgressBar energyBar = (ProgressBar) findViewById(R.id.energyBar);
+        energyBar = (ProgressBar) findViewById(R.id.energyBar);
         energyBar.setMax(100);
         energyBar.setProgress(energyValue);
         energyBar.setScaleY(3f);
@@ -234,32 +237,10 @@ public class GameActivity extends AppCompatActivity {
         happyIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
-                Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-                findViewById(R.id.accountantImage).startAnimation(shake);
-
-                //happy and hunger value can't exceed 100
-                //check what value will be when adding 20, if > 100
-                //reset happy value to 100 then update text and progress
-                //bar to reflect new value
-
-                if ((happyValue+20)<=100){
-                    happyValue += 20;
-                    happyBar.setProgress(happyValue);
-                    //happy.setText(Integer.toString(happyValue));
-                }
-                else {
-                    happyValue = 100;
-                    happyBar.setProgress(happyValue);
-                    //happy.setText(Integer.toString(happyValue));
-                }
-
-
+                showHappyMenu(v, v.getContext());
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
                         hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
-
                 engine.setAge();
-
             }
         });
 
@@ -267,48 +248,18 @@ public class GameActivity extends AppCompatActivity {
         hungerIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
-                showPopupWindow(v, v.getContext());
-
-//                Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-//                findViewById(R.id.accountantImage).startAnimation(shake);
-                //happy and hunger value can't exceed 100
-                //check what value will be when adding 20, if > 100
-                //reset happy value to 100 then update text and progress
-                //bar to reflect new value
-//                if ((hungerValue+20)<=100){
-//                    hungerValue += 20;
-//                    hungerBar.setProgress(hungerValue);
-//                    //hunger.setText(Integer.toString(hungerValue));
-//                }
-//                else {
-//                    hungerValue = 100;
-//                    hungerBar.setProgress(hungerValue);
-//                    //hunger.setText(Integer.toString(hungerValue));
-//                }
+                showHungerMenu(v, v.getContext());
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
                         hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
 
                 engine.setAge();
-
-
             }
         });
 
-        funIcon.setOnClickListener(new View.OnClickListener(){
+        hygieneIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-                findViewById(R.id.accountantImage).startAnimation(shake);
-
-                if ((hygieneValue +20)<=100){
-                    hygieneValue += 20;
-                    hygieneBar.setProgress(hygieneValue);
-                }
-                else {
-                    hygieneValue = 100;
-                    hygieneBar.setProgress(hygieneValue);
-                }
+                showHygieneMenu(v, v.getContext());
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
                         hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
 
@@ -320,17 +271,7 @@ public class GameActivity extends AppCompatActivity {
         energyIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-                findViewById(R.id.accountantImage).startAnimation(shake);
-
-                if ((energyValue+20)<=100){
-                    energyValue += 20;
-                    energyBar.setProgress(energyValue);
-                }
-                else {
-                    energyValue = 100;
-                    energyBar.setProgress(energyValue);
-                }
+                showEnergyMenu(v, v.getContext());
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
                         hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
 
@@ -378,7 +319,7 @@ public class GameActivity extends AppCompatActivity {
 
 
     //https://readyandroid.wordpress.com/popup-menu-with-icon/
-    int showPopupWindow(View view, Context context){
+    private int showHungerMenu(View view, Context context){
         Context wrapper = new ContextThemeWrapper(context, R.style.PopupMenu);
         PopupMenu popup = new PopupMenu(wrapper, view);
         try {
@@ -400,8 +341,8 @@ public class GameActivity extends AppCompatActivity {
         popup.getMenuInflater().inflate(R.menu.hunger_menu, popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-                //setHungerMenuChoice(item.getTitle().toString());
-                //Toast.makeText(getApplicationContext(), "You Clicked : " + item.getTitle(),  Toast.LENGTH_SHORT).show();
+                Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                findViewById(R.id.accountantImage).startAnimation(shake);
                 if ((hungerValue+20)<=100){
                     hungerValue += 20;
                     hungerBar.setProgress(hungerValue);
@@ -411,6 +352,129 @@ public class GameActivity extends AppCompatActivity {
                     hungerBar.setProgress(hungerValue);
                 }
 
+                return true;
+            }
+        });
+        popup.show();
+        return 0;
+    }
+
+    private int showHappyMenu(View view, Context context){
+        Context wrapper = new ContextThemeWrapper(context, R.style.PopupMenu);
+        PopupMenu popup = new PopupMenu(wrapper, view);
+        try {
+            Field[] fields = popup.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                if ("mPopup".equals(field.getName())) {
+                    field.setAccessible(true);
+                    Object menuPopupHelper = field.get(popup);
+                    Class<?> classPopupHelper = Class.forName(menuPopupHelper.getClass().getName());
+                    Method setForceIcons = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
+                    setForceIcons.invoke(menuPopupHelper, true);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        popup.getMenuInflater().inflate(R.menu.happy_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                findViewById(R.id.accountantImage).startAnimation(shake);
+
+                if ((happyValue+20)<=100){
+                    happyValue += 20;
+                    happyBar.setProgress(happyValue);
+                    //happy.setText(Integer.toString(happyValue));
+                }
+                else {
+                    happyValue = 100;
+                    happyBar.setProgress(happyValue);
+                    //happy.setText(Integer.toString(happyValue));
+                }
+
+                return true;
+            }
+        });
+        popup.show();
+        return 0;
+    }
+
+    private int showHygieneMenu(View view, Context context){
+        Context wrapper = new ContextThemeWrapper(context, R.style.PopupMenu);
+        PopupMenu popup = new PopupMenu(wrapper, view);
+        try {
+            Field[] fields = popup.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                if ("mPopup".equals(field.getName())) {
+                    field.setAccessible(true);
+                    Object menuPopupHelper = field.get(popup);
+                    Class<?> classPopupHelper = Class.forName(menuPopupHelper.getClass().getName());
+                    Method setForceIcons = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
+                    setForceIcons.invoke(menuPopupHelper, true);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        popup.getMenuInflater().inflate(R.menu.hygiene_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                findViewById(R.id.accountantImage).startAnimation(shake);
+
+                if ((hygieneValue +20)<=100){
+                    hygieneValue += 20;
+                    hygieneBar.setProgress(hygieneValue);
+                }
+                else {
+                    hygieneValue = 100;
+                    hygieneBar.setProgress(hygieneValue);
+                }
+                return true;
+            }
+        });
+        popup.show();
+        return 0;
+    }
+
+    private int showEnergyMenu(View view, Context context){
+        Context wrapper = new ContextThemeWrapper(context, R.style.PopupMenu);
+        PopupMenu popup = new PopupMenu(wrapper, view);
+        try {
+            Field[] fields = popup.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                if ("mPopup".equals(field.getName())) {
+                    field.setAccessible(true);
+                    Object menuPopupHelper = field.get(popup);
+                    Class<?> classPopupHelper = Class.forName(menuPopupHelper.getClass().getName());
+                    Method setForceIcons = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
+                    setForceIcons.invoke(menuPopupHelper, true);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        popup.getMenuInflater().inflate(R.menu.energy_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                findViewById(R.id.accountantImage).startAnimation(shake);
+
+                if ((energyValue+20)<=100){
+                    energyValue += 20;
+                    energyBar.setProgress(energyValue);
+                }
+                else {
+                    energyValue = 100;
+                    energyBar.setProgress(energyValue);
+                }
                 return true;
             }
         });

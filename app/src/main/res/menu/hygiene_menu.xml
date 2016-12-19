@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/shampoo"
+        android:title="Shampoo"
+        android:icon="@drawable/shampoo"/>
+    <item
+        android:title="Soap"
+        android:id="@+id/soap"
+        android:icon="@drawable/soap" />
+    <item
+        android:title="Brush Teeth"
+        android:id="@+id/brushTeeth"
+        android:icon="@drawable/toothbrush" />
+</menu>
