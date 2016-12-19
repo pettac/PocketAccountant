@@ -1,6 +1,8 @@
 package cst4701.game.pocketaccountant;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -23,6 +25,8 @@ public class GameEngine {
         this.energyBar = energyBar;
         this.hygieneBar = hygieneBar;
         this.accountantImage = accountantImage;
+
+
     }
 
     private void happyCheck(int ageCode){

@@ -1,18 +1,26 @@
 package cst4701.game.pocketaccountant;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.ContextThemeWrapper;
+import android.support.v7.widget.PopupMenu;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -23,8 +31,7 @@ public class GameActivity extends AppCompatActivity {
     private int energyValue;
     private int ageCounter;
 
-
-
+    ProgressBar hungerBar;
     /*
         - Values that need to be saved into the DB - status values... happy, hunger, fun, energy.
         - What is his current age?
@@ -84,7 +91,7 @@ public class GameActivity extends AppCompatActivity {
                 android.graphics.PorterDuff.Mode.SRC_IN);
 
         //assign variable to hunger bar
-        final ProgressBar hungerBar = (ProgressBar) findViewById(R.id.hungerBar);
+        hungerBar = (ProgressBar) findViewById(R.id.hungerBar);
 
         //set max progress bar value
         hungerBar.setMax(100);
@@ -145,6 +152,19 @@ public class GameActivity extends AppCompatActivity {
                     hungerBar.setProgress(hungerValue);
                     hygieneBar.setProgress(hygieneValue);
                     energyBar.setProgress(energyValue);
+
+                    //change scene to be in space
+                    //once these conditions are met it will change to space for good
+                    //to easily test just make these values super low
+                    //I like to make agecounter > 5 and the rest > 20
+                    if (ageCounter > 100 &&
+                            happyValue > 80 &&
+                            hungerValue > 80 &&
+                            hungerValue > 80 &&
+                            energyValue > 80) {
+                        RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_continue);
+                        layout.setBackgroundResource(R.drawable.spacebackground);
+                    }
 
                     //change text to show current hunger, happy, fun and energy value
                     //restart countdown
@@ -222,6 +242,7 @@ public class GameActivity extends AppCompatActivity {
                 //check what value will be when adding 20, if > 100
                 //reset happy value to 100 then update text and progress
                 //bar to reflect new value
+
                 if ((happyValue+20)<=100){
                     happyValue += 20;
                     happyBar.setProgress(happyValue);
@@ -232,6 +253,7 @@ public class GameActivity extends AppCompatActivity {
                     happyBar.setProgress(happyValue);
                     //happy.setText(Integer.toString(happyValue));
                 }
+
 
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
                         hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
@@ -246,24 +268,24 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
 
-                //showPopupWindow(v, hungryBar);
+                showPopupWindow(v, v.getContext());
 
-                Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-                findViewById(R.id.accountantImage).startAnimation(shake);
+//                Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+//                findViewById(R.id.accountantImage).startAnimation(shake);
                 //happy and hunger value can't exceed 100
                 //check what value will be when adding 20, if > 100
                 //reset happy value to 100 then update text and progress
                 //bar to reflect new value
-                if ((hungerValue+20)<=100){
-                    hungerValue += 20;
-                    hungerBar.setProgress(hungerValue);
-                    //hunger.setText(Integer.toString(hungerValue));
-                }
-                else {
-                    hungerValue = 100;
-                    hungerBar.setProgress(hungerValue);
-                    //hunger.setText(Integer.toString(hungerValue));
-                }
+//                if ((hungerValue+20)<=100){
+//                    hungerValue += 20;
+//                    hungerBar.setProgress(hungerValue);
+//                    //hunger.setText(Integer.toString(hungerValue));
+//                }
+//                else {
+//                    hungerValue = 100;
+//                    hungerBar.setProgress(hungerValue);
+//                    //hunger.setText(Integer.toString(hungerValue));
+//                }
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
                         hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
 
@@ -352,13 +374,13 @@ public class GameActivity extends AppCompatActivity {
         Resources r = getResources();
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, r.getDisplayMetrics());
     }
-    /*
 
-    Popup Menu code
+
 
     //https://readyandroid.wordpress.com/popup-menu-with-icon/
-    int showPopupWindow(View view, ProgressBar hungryBar){
-        PopupMenu popup = new PopupMenu(this, view);
+    int showPopupWindow(View view, Context context){
+        Context wrapper = new ContextThemeWrapper(context, R.style.PopupMenu);
+        PopupMenu popup = new PopupMenu(wrapper, view);
         try {
             Field[] fields = popup.getClass().getDeclaredFields();
             for (Field field : fields) {
@@ -375,12 +397,19 @@ public class GameActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+        popup.getMenuInflater().inflate(R.menu.hunger_menu, popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 //setHungerMenuChoice(item.getTitle().toString());
                 //Toast.makeText(getApplicationContext(), "You Clicked : " + item.getTitle(),  Toast.LENGTH_SHORT).show();
-
+                if ((hungerValue+20)<=100){
+                    hungerValue += 20;
+                    hungerBar.setProgress(hungerValue);
+                }
+                else {
+                    hungerValue = 100;
+                    hungerBar.setProgress(hungerValue);
+                }
 
                 return true;
             }
@@ -388,5 +417,4 @@ public class GameActivity extends AppCompatActivity {
         popup.show();
         return 0;
     }
-    */
 }
