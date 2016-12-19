@@ -12,18 +12,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    //launch GameActivity with new values
     public void openNewGame(View view){
+        //Clear Shared Preferences variables
         this.getApplicationContext().getSharedPreferences("values", 0).edit().clear().apply();
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
 
+    //launch GameActivity with previous values
     public void openContinue(View view){
-//        SharedPreferences values = getApplicationContext().getSharedPreferences("values", 0);
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
 
+    //launch Settings
     public void openSettings(View view){
         Intent intent = new Intent(this, Settings.class);
         startActivity(intent);

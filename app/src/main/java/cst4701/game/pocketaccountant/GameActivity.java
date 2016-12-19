@@ -3,14 +3,12 @@ package cst4701.game.pocketaccountant;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.PopupMenu;
-import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,19 +17,19 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class GameActivity extends AppCompatActivity {
 
-    //initial hunger and happy values
+    //create value variables
     private int hungerValue;
     private int happyValue;
     private int hygieneValue;
     private int energyValue;
     private int ageCounter;
 
+    //create progress bar variables
     ProgressBar hungerBar;
     ProgressBar happyBar;
     ProgressBar hygieneBar;
@@ -54,6 +52,7 @@ public class GameActivity extends AppCompatActivity {
         //assign variable to TextView objects
         final TextView timer = (TextView)findViewById(R.id.countdownTimer);
 
+        //assign ImageView icons to variables
         final ImageView hungerIcon = (ImageView)findViewById(R.id.hungerIcon);
         final ImageView happyIcon = (ImageView)findViewById(R.id.happyIcon);
         final ImageView hygieneIcon = (ImageView) findViewById(R.id.hygieneIcon);
@@ -61,7 +60,6 @@ public class GameActivity extends AppCompatActivity {
 
         //assign variable to Happy progress bar
         happyBar = (ProgressBar) findViewById(R.id.happyBar);
-
         //set max progress bar value
         happyBar.setMax(100);
         //set starting progress bar value
@@ -74,17 +72,13 @@ public class GameActivity extends AppCompatActivity {
 
         //assign variable to hunger bar
         hungerBar = (ProgressBar) findViewById(R.id.hungerBar);
-
-        //set max progress bar value
         hungerBar.setMax(100);
-        //set starting progress bar value
         hungerBar.setProgress(hungerValue);
-        //set progress bar height
         hungerBar.setScaleY(3f);
-        //set color of progress bar using hex value
         hungerBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
                 android.graphics.PorterDuff.Mode.SRC_IN);
 
+        //assign variable to hygiene bar progress bar
         hygieneBar = (ProgressBar) findViewById(R.id.hygieneBar);
         hygieneBar.setMax(100);
         hygieneBar.setProgress(hygieneValue);
@@ -92,6 +86,7 @@ public class GameActivity extends AppCompatActivity {
         hygieneBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
                 android.graphics.PorterDuff.Mode.SRC_IN);
 
+        //assign variable to energy bar progress bar
         energyBar = (ProgressBar) findViewById(R.id.energyBar);
         energyBar.setMax(100);
         energyBar.setProgress(energyValue);
@@ -103,7 +98,7 @@ public class GameActivity extends AppCompatActivity {
         final ImageView accountantImage = (ImageView) findViewById(R.id.accountantImage);
         //set initial accountant image
         accountantImage.setBackgroundResource(R.drawable.baby_accountant_happy);
-        GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
+        new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
                 hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
 
         new CountDownTimer(5000, 1000) {
@@ -175,7 +170,7 @@ public class GameActivity extends AppCompatActivity {
                     finish();
                 }
 
-                //if fun <=0 set fun values to 0 and end countdown
+                //if hygiene <=0 set fun values to 0 and end countdown
                 else if ((hygieneValue - 20) <= 0){
                     Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
                     intent.putExtra("key", 3);
@@ -193,7 +188,7 @@ public class GameActivity extends AppCompatActivity {
             }
         }.start();
 
-        //create listener for happy bar
+        //create listener for happy icon
         happyIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -204,39 +199,37 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        //create listener for hunger bar
+        //create listener for hunger icon
         hungerIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 showHungerMenu(v, v.getContext());
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
                         hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
-
                 engine.setAge();
             }
         });
 
+        //create listener for hygiene icon
         hygieneIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 showHygieneMenu(v, v.getContext());
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
                         hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
-
                 engine.setAge();
 
             }
         });
 
+        //create listener for energy icon
         energyIcon.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 showEnergyMenu(v, v.getContext());
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
                         hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
-
                 engine.setAge();
-
             }
         });
     }
@@ -268,17 +261,13 @@ public class GameActivity extends AppCompatActivity {
         hygieneValue = values.getInt("hygiene", 100);
         energyValue = values.getInt("energy", 100);
         ageCounter = values.getInt("age", 0);
-
     }
 
-    protected float dpToPx(){
-        Resources r = getResources();
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, r.getDisplayMetrics());
-    }
+    //The following 4 methods create a popup menu to display icons. It is done this way because
+    //popup menus in android do not allow icons in the menu by default. This is a work around. Code
+    //comes from the following site: https://readyandroid.wordpress.com/popup-menu-with-icon/
 
-
-
-    //https://readyandroid.wordpress.com/popup-menu-with-icon/
+    //create hunger menu
     private int showHungerMenu(View view, Context context){
         Context wrapper = new ContextThemeWrapper(context, R.style.PopupMenu);
         PopupMenu popup = new PopupMenu(wrapper, view);
@@ -319,6 +308,7 @@ public class GameActivity extends AppCompatActivity {
         return 0;
     }
 
+    //create happy menu
     private int showHappyMenu(View view, Context context){
         Context wrapper = new ContextThemeWrapper(context, R.style.PopupMenu);
         PopupMenu popup = new PopupMenu(wrapper, view);
@@ -362,6 +352,7 @@ public class GameActivity extends AppCompatActivity {
         return 0;
     }
 
+    //create hygiene menu
     private int showHygieneMenu(View view, Context context){
         Context wrapper = new ContextThemeWrapper(context, R.style.PopupMenu);
         PopupMenu popup = new PopupMenu(wrapper, view);
@@ -402,6 +393,7 @@ public class GameActivity extends AppCompatActivity {
         return 0;
     }
 
+    //create energy menu
     private int showEnergyMenu(View view, Context context){
         Context wrapper = new ContextThemeWrapper(context, R.style.PopupMenu);
         PopupMenu popup = new PopupMenu(wrapper, view);

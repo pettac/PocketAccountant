@@ -14,6 +14,8 @@ public class GameOverActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_over);
         this.getApplicationContext().getSharedPreferences("values", 0).edit().clear().apply();
         Intent intent = getIntent();
+        //get's key value from the intent. This key value is set by the activity that creates
+        //the current activity
         int deathReason = intent.getIntExtra("key", 0);
 
         final TextView deathMessage = (TextView)findViewById(R.id.deathMessage);
@@ -26,6 +28,7 @@ public class GameOverActivity extends AppCompatActivity {
             4 - low energy
          */
 
+        //determine how Bobbert died based on the death status codes
         if (deathReason == 1) {
             deathMessage.setText("Bobbert found himself very unhappy. He needs to do taxes to have fun and be happy!" +
                     " Have Bobbert do more taxes next time.");
@@ -44,6 +47,8 @@ public class GameOverActivity extends AppCompatActivity {
                     " gets tired... I think he earned it!");
         }
     }
+
+    //launch MainActivity
     public void openMainMenu(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
