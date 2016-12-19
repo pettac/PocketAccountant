@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_continue"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context="cst4701.game.pocketaccountant.GameActivity"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/tombstone"
+        android:layout_marginTop="29dp"
+        android:id="@+id/tombstone"
+        android:adjustViewBounds="false"
+        android:layout_marginStart="17dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/gameover" />
+
+    <TextView
+        android:text="GAME OVER"
+        android:id="@+id/gameover"
+        android:layout_width="300dp"
+        android:textSize="40sp"
+        android:textAlignment="center"
+        android:layout_height="65dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/tombstone"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:id="@+id/mainMenu"
+        android:background="@drawable/main_menu_button"
+        android:onClick="openMainMenu"/>
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package cst4701.game.pocketaccountant;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -174,61 +175,26 @@ public class GameActivity extends AppCompatActivity {
                     this.start();
                 }
                 //if happiness is <= 0 set happiness values to 0 and end countdown
-                if ((happyValue-10) <= 0){
-                    timer.setText("0");
-                    happyBar.setProgress(0);
-
-                    hungerBar.setProgress(hungerValue-10);
-                    hygieneBar.setProgress(hygieneValue -10);
-                    energyBar.setProgress(energyValue-10);
-
-                    accountantImage.setBackgroundResource(R.drawable.tombstone);
-                    accountantImage.requestLayout();
-                    accountantImage.getLayoutParams().height = Math.round(dpToPx());
+                else if ((happyValue-10) <= 0){
+                    Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
+                    startActivity(intent);
                 }
                 //if hunger <= 0 set hunger values to 0 and end countdown
                 else if ((hungerValue-10) <= 0) {
-                    timer.setText("0");
-                    hungerBar.setProgress(0);
-
-                    happyBar.setProgress(happyValue-10);
-                    hygieneBar.setProgress(hygieneValue -10);
-                    energyBar.setProgress(energyValue-10);
-
-                    //game over, show dead accountant
-                    //fix this to show correct accountant
-                    accountantImage.setBackgroundResource(R.drawable.tombstone);
-                    accountantImage.requestLayout();
-                    accountantImage.getLayoutParams().height = Math.round(dpToPx());
+                    Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
+                    startActivity(intent);
                 }
 
                 //if fun <=0 set fun values to 0 and end countdown
-                else if ((hygieneValue -10) <= 0){
-                    timer.setText("0");
-                    hygieneBar.setProgress(0);
-
-                    happyBar.setProgress(happyValue-10);
-                    hungerBar.setProgress(hungerValue-10);
-                    energyBar.setProgress(energyValue-10);
-
-                    accountantImage.setBackgroundResource(R.drawable.tombstone);
-                    accountantImage.requestLayout();
-                    accountantImage.getLayoutParams().height = Math.round(dpToPx());
-
+                else if ((hygieneValue - 10) <= 0){
+                    Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
+                    startActivity(intent);
                 }
 
                 //if energy <=0 set fun values to 0 and end countdown
                 else if ((energyValue-10) <= 0){
-                    timer.setText("0");
-                    energyBar.setProgress(0);
-
-                    happyBar.setProgress(happyValue-10);
-                    hungerBar.setProgress(hungerValue-10);
-                    hygieneBar.setProgress(hygieneValue -10);
-
-                    accountantImage.setBackgroundResource(R.drawable.tombstone);
-                    accountantImage.requestLayout();
-                    accountantImage.getLayoutParams().height = Math.round(dpToPx());
+                    Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
+                    startActivity(intent);
                 }
             }
         }.start();
