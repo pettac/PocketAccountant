@@ -1,28 +1,25 @@
 package cst4701.game.pocketaccountant;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.PopupMenu;
-import android.view.MenuItem;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.File;
 
 public class GameActivity extends AppCompatActivity {
 
     //initial hunger and happy values
     private int hungerValue;
     private int happyValue;
-    private int funValue;
+    private int hygieneValue;
     private int energyValue;
     private int ageCounter;
 
@@ -34,7 +31,6 @@ public class GameActivity extends AppCompatActivity {
             - Kid
             - Young Adult
             - Adult
-            - Old
         - How to calculate his age?
             - Maybe have a counter that adds 1 every cycle and then at set numbers he evolves
             - Between 0 and 17 he is kid
@@ -55,14 +51,14 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_continue);
+        setContentView(R.layout.activity_game);
 
         //access the shared preferences file. If the values do not exist it will default to 100 or 0
         //if the values exist it assigns the value in the file to the global variable
         SharedPreferences values = getApplicationContext().getSharedPreferences("values", 0);
         happyValue = values.getInt("happy", 100);
         hungerValue = values.getInt("hunger", 100);
-        funValue = values.getInt("fun", 100);
+        hygieneValue = values.getInt("hygiene", 100);
         energyValue = values.getInt("energy", 100);
         ageCounter = values.getInt("age", 0);
 
@@ -71,7 +67,7 @@ public class GameActivity extends AppCompatActivity {
 
         final ImageView hungerIcon = (ImageView)findViewById(R.id.hungerIcon);
         final ImageView happyIcon = (ImageView)findViewById(R.id.happyIcon);
-        final ImageView funIcon = (ImageView) findViewById(R.id.funIcon);
+        final ImageView funIcon = (ImageView) findViewById(R.id.hygieneIcon);
         final ImageView energyIcon = (ImageView) findViewById(R.id.energyIcon);
 
         //assign variable to Happy progress bar
@@ -100,11 +96,11 @@ public class GameActivity extends AppCompatActivity {
         hungerBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
                 android.graphics.PorterDuff.Mode.SRC_IN);
 
-        final ProgressBar funBar = (ProgressBar) findViewById(R.id.funBar);
-        funBar.setMax(100);
-        funBar.setProgress(funValue);
-        funBar.setScaleY(3f);
-        funBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
+        final ProgressBar hygieneBar = (ProgressBar) findViewById(R.id.hygieneBar);
+        hygieneBar.setMax(100);
+        hygieneBar.setProgress(hygieneValue);
+        hygieneBar.setScaleY(3f);
+        hygieneBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
                 android.graphics.PorterDuff.Mode.SRC_IN);
 
         final ProgressBar energyBar = (ProgressBar) findViewById(R.id.energyBar);
@@ -119,14 +115,14 @@ public class GameActivity extends AppCompatActivity {
         //set initial accountant image
         accountantImage.setBackgroundResource(R.drawable.baby_accountant_happy);
         GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
-                funValue, happyBar, hungerBar, energyBar, funBar, accountantImage);
+                hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
 
         new CountDownTimer(5000, 1000) {
 
             //what to during each tick of the timer
             public void onTick(long millisUntilFinished) {
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
-                        funValue, happyBar, hungerBar, energyBar, funBar, accountantImage);
+                        hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
                 timer.setText(Long.toString(millisUntilFinished / 1000));
                 engine.setAge();
 
@@ -137,17 +133,17 @@ public class GameActivity extends AppCompatActivity {
             public void onFinish() {
                 //check if happiness or hunger go below 0
                 //if not then continue as normal and restart countdown
-                if ((happyValue-10)>0 && (hungerValue-10)>0 && (funValue-10)>0 && (energyValue-10)>0){
+                if ((happyValue-10)>0 && (hungerValue-10)>0 && (hygieneValue -10)>0 && (energyValue-10)>0){
                     //decrease hunger value and happy value by 10
                     hungerValue -= 10;
                     happyValue -= 10;
-                    funValue -= 10;
+                    hygieneValue -= 10;
                     energyValue -= 10;
 
                     //set progress bars to current hunger, happy, fun, and energy value
                     happyBar.setProgress(happyValue);
                     hungerBar.setProgress(hungerValue);
-                    funBar.setProgress(funValue);
+                    hygieneBar.setProgress(hygieneValue);
                     energyBar.setProgress(energyValue);
 
                     //change text to show current hunger, happy, fun and energy value
@@ -160,12 +156,12 @@ public class GameActivity extends AppCompatActivity {
                     happyBar.setProgress(0);
 
                     hungerBar.setProgress(hungerValue-10);
-                    funBar.setProgress(funValue-10);
+                    hygieneBar.setProgress(hygieneValue -10);
                     energyBar.setProgress(energyValue-10);
 
-                    //game over, show dead accountant
-                    //fix this to show correct accountant
                     accountantImage.setBackgroundResource(R.drawable.tombstone);
+                    accountantImage.requestLayout();
+                    accountantImage.getLayoutParams().height = Math.round(dpToPx());
                 }
                 //if hunger <= 0 set hunger values to 0 and end countdown
                 else if ((hungerValue-10) <= 0) {
@@ -173,24 +169,29 @@ public class GameActivity extends AppCompatActivity {
                     hungerBar.setProgress(0);
 
                     happyBar.setProgress(happyValue-10);
-                    funBar.setProgress(funValue-10);
+                    hygieneBar.setProgress(hygieneValue -10);
                     energyBar.setProgress(energyValue-10);
 
                     //game over, show dead accountant
                     //fix this to show correct accountant
                     accountantImage.setBackgroundResource(R.drawable.tombstone);
+                    accountantImage.requestLayout();
+                    accountantImage.getLayoutParams().height = Math.round(dpToPx());
                 }
 
                 //if fun <=0 set fun values to 0 and end countdown
-                else if ((funValue-10) <= 0){
+                else if ((hygieneValue -10) <= 0){
                     timer.setText("0");
-                    funBar.setProgress(0);
+                    hygieneBar.setProgress(0);
 
                     happyBar.setProgress(happyValue-10);
                     hungerBar.setProgress(hungerValue-10);
                     energyBar.setProgress(energyValue-10);
 
                     accountantImage.setBackgroundResource(R.drawable.tombstone);
+                    accountantImage.requestLayout();
+                    accountantImage.getLayoutParams().height = Math.round(dpToPx());
+
                 }
 
                 //if energy <=0 set fun values to 0 and end countdown
@@ -200,9 +201,11 @@ public class GameActivity extends AppCompatActivity {
 
                     happyBar.setProgress(happyValue-10);
                     hungerBar.setProgress(hungerValue-10);
-                    funBar.setProgress(funValue-10);
+                    hygieneBar.setProgress(hygieneValue -10);
 
                     accountantImage.setBackgroundResource(R.drawable.tombstone);
+                    accountantImage.requestLayout();
+                    accountantImage.getLayoutParams().height = Math.round(dpToPx());
                 }
             }
         }.start();
@@ -231,7 +234,7 @@ public class GameActivity extends AppCompatActivity {
                 }
 
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
-                        funValue, happyBar, hungerBar, energyBar, funBar, accountantImage);
+                        hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
 
                 engine.setAge();
 
@@ -262,7 +265,7 @@ public class GameActivity extends AppCompatActivity {
                     //hunger.setText(Integer.toString(hungerValue));
                 }
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
-                        funValue, happyBar, hungerBar, energyBar, funBar, accountantImage);
+                        hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
 
                 engine.setAge();
 
@@ -276,16 +279,16 @@ public class GameActivity extends AppCompatActivity {
                 Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
                 findViewById(R.id.accountantImage).startAnimation(shake);
 
-                if ((funValue+20)<=100){
-                    funValue += 20;
-                    funBar.setProgress(funValue);
+                if ((hygieneValue +20)<=100){
+                    hygieneValue += 20;
+                    hygieneBar.setProgress(hygieneValue);
                 }
                 else {
-                    funValue = 100;
-                    funBar.setProgress(funValue);
+                    hygieneValue = 100;
+                    hygieneBar.setProgress(hygieneValue);
                 }
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
-                        funValue, happyBar, hungerBar, energyBar, funBar, accountantImage);
+                        hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
 
                 engine.setAge();
 
@@ -307,7 +310,7 @@ public class GameActivity extends AppCompatActivity {
                     energyBar.setProgress(energyValue);
                 }
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
-                        funValue, happyBar, hungerBar, energyBar, funBar, accountantImage);
+                        hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
 
                 engine.setAge();
 
@@ -324,7 +327,7 @@ public class GameActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt("happy", happyValue);
         editor.putInt("hunger", hungerValue);
-        editor.putInt("fun", funValue);
+        editor.putInt("hygiene", hygieneValue);
         editor.putInt("energy", energyValue);
         editor.putInt("age", ageCounter);
 
@@ -339,10 +342,15 @@ public class GameActivity extends AppCompatActivity {
         SharedPreferences values = getApplicationContext().getSharedPreferences("values", 0);
         happyValue = values.getInt("happy", 100);
         hungerValue = values.getInt("hunger", 100);
-        funValue = values.getInt("fun", 100);
+        hygieneValue = values.getInt("hygiene", 100);
         energyValue = values.getInt("energy", 100);
         ageCounter = values.getInt("age", 0);
 
+    }
+
+    protected float dpToPx(){
+        Resources r = getResources();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, r.getDisplayMetrics());
     }
     /*
 

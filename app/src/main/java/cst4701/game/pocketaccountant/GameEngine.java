@@ -6,22 +6,22 @@ import android.widget.ProgressBar;
 
 public class GameEngine {
 
-    private int ageCounter, happyValue, hungerValue, energyValue, funValue;
-    private ProgressBar happyBar, hungerBar, energyBar, funBar;
+    private int ageCounter, happyValue, hungerValue, energyValue, hygieneValue;
+    private ProgressBar happyBar, hungerBar, energyBar, hygieneBar;
     private ImageView accountantImage;
 
-    public GameEngine(int ageCounter, int happyValue, int hungerValue, int energyValue, int funValue,
+    public GameEngine(int ageCounter, int happyValue, int hungerValue, int energyValue, int hygieneValue,
                       ProgressBar happyBar, ProgressBar hungerBar, ProgressBar energyBar,
-                      ProgressBar funBar, ImageView accountantImage){
+                      ProgressBar hygieneBar, ImageView accountantImage){
         this.ageCounter = ageCounter;
         this.happyValue = happyValue;
         this.hungerValue = hungerValue;
         this.energyValue = energyValue;
-        this.funValue = funValue;
+        this.hygieneValue = hygieneValue;
         this.happyBar = happyBar;
         this.hungerBar = hungerBar;
         this.energyBar = energyBar;
-        this.funBar = funBar;
+        this.hygieneBar = hygieneBar;
         this.accountantImage = accountantImage;
     }
 
@@ -83,25 +83,6 @@ public class GameEngine {
                         android.graphics.PorterDuff.Mode.SRC_IN);
             }
         }
-        else if (ageCode == 4) {
-            if (happyValue > 69) {
-                accountantImage.setBackgroundResource(R.drawable.happyo);
-                happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
-                        android.graphics.PorterDuff.Mode.SRC_IN);
-            }
-
-            else if (happyValue > 29) {
-                accountantImage.setBackgroundResource(R.drawable.boredo);
-                happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
-                        android.graphics.PorterDuff.Mode.SRC_IN);
-            }
-            else if (happyValue > 0) {
-                accountantImage.setBackgroundResource(R.drawable.sado);
-                happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"),
-                        android.graphics.PorterDuff.Mode.SRC_IN);
-            }
-        }
-
     }
 
     private void hungerCheck(){
@@ -121,17 +102,17 @@ public class GameEngine {
         }
     }
 
-    private void funCheck(){
-        if (funValue > 69) {
-            funBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
+    private void hygieneCheck(){
+        if (hygieneValue > 69) {
+            hygieneBar.getProgressDrawable().setColorFilter(Color.parseColor("#1e9626"),
                     android.graphics.PorterDuff.Mode.SRC_IN);
         }
-        else if (funValue > 29) {
-            funBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
+        else if (hygieneValue > 29) {
+            hygieneBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF8C00"),
                     android.graphics.PorterDuff.Mode.SRC_IN);
         }
-        else if (funValue > 0) {
-            funBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"),
+        else if (hygieneValue > 0) {
+            hygieneBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"),
                     android.graphics.PorterDuff.Mode.SRC_IN);
         }
     }
@@ -156,32 +137,25 @@ public class GameEngine {
             1 = baby
             2 = teen
             3 = adult
-            4 = old
      */
 
     public void setAge(){
         if (ageCounter < 20) {
             happyCheck(1);
             hungerCheck();
-            funCheck();
+            hygieneCheck();
             energyCheck();
         }
         else if (ageCounter < 40) {
             happyCheck(2);
             hungerCheck();
-            funCheck();
-            energyCheck();
-        }
-        else if (ageCounter < 60) {
-            happyCheck(3);
-            hungerCheck();
-            funCheck();
+            hygieneCheck();
             energyCheck();
         }
         else {
-            happyCheck(4);
+            happyCheck(3);
             hungerCheck();
-            funCheck();
+            hygieneCheck();
             energyCheck();
         }
     }
