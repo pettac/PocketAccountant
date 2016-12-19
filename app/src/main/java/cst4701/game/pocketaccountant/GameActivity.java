@@ -36,28 +36,6 @@ public class GameActivity extends AppCompatActivity {
     ProgressBar happyBar;
     ProgressBar hygieneBar;
     ProgressBar energyBar;
-    /*
-        - Values that need to be saved into the DB - status values... happy, hunger, fun, energy.
-        - What is his current age?
-            - Kid
-            - Young Adult
-            - Adult
-        - How to calculate his age?
-            - Maybe have a counter that adds 1 every cycle and then at set numbers he evolves
-            - Between 0 and 17 he is kid
-            - Between 18 and 24 is a young adult
-            - Between 25 and 64 is an adult
-            - 65+ is an old fart
-            Something like that
-        TO DO:
-           x - Fix progress bars not turning red
-            - Add icons for fun and happy
-           x - Add accountant image
-            - Make accountant pace back and forth on screen
-           x - Set up database
-                - This would be nice to do but if we run out of time I think he will
-                  accept the game with everything else
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,12 +122,12 @@ public class GameActivity extends AppCompatActivity {
             public void onFinish() {
                 //check if happiness or hunger go below 0
                 //if not then continue as normal and restart countdown
-                if ((happyValue-10)>0 && (hungerValue-10)>0 && (hygieneValue -10)>0 && (energyValue-10)>0){
-                    //decrease hunger value and happy value by 10
-                    hungerValue -= 10;
-                    happyValue -= 10;
-                    hygieneValue -= 10;
-                    energyValue -= 10;
+                if ((happyValue-20)>0 && (hungerValue-20)>0 && (hygieneValue -20)>0 && (energyValue-20)>0){
+                    //decrease hunger value and happy value by 20
+                    hungerValue -= 20;
+                    happyValue -= 20;
+                    hygieneValue -= 20;
+                    energyValue -= 20;
 
                     //set progress bars to current hunger, happy, fun, and energy value
                     happyBar.setProgress(happyValue);
@@ -174,27 +152,43 @@ public class GameActivity extends AppCompatActivity {
                     //restart countdown
                     this.start();
                 }
+
+                /*
+                    Death Status codes:
+                    1 - unhappy
+                    2 - died of hunger
+                    3 - poor hygiene
+                    4 - low energy
+                 */
                 //if happiness is <= 0 set happiness values to 0 and end countdown
-                else if ((happyValue-10) <= 0){
+                else if ((happyValue-20) <= 0){
                     Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
+                    intent.putExtra("key", 1);
                     startActivity(intent);
+                    finish();
                 }
                 //if hunger <= 0 set hunger values to 0 and end countdown
-                else if ((hungerValue-10) <= 0) {
+                else if ((hungerValue-20) <= 0) {
                     Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
+                    intent.putExtra("key", 2);
                     startActivity(intent);
+                    finish();
                 }
 
                 //if fun <=0 set fun values to 0 and end countdown
-                else if ((hygieneValue - 10) <= 0){
+                else if ((hygieneValue - 20) <= 0){
                     Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
+                    intent.putExtra("key", 3);
                     startActivity(intent);
+                    finish();
                 }
 
                 //if energy <=0 set fun values to 0 and end countdown
-                else if ((energyValue-10) <= 0){
+                else if ((energyValue-20) <= 0){
                     Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
+                    intent.putExtra("key", 4);
                     startActivity(intent);
+                    finish();
                 }
             }
         }.start();

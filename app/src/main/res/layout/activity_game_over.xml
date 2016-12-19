@@ -34,10 +34,19 @@
     <Button
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/tombstone"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
         android:id="@+id/mainMenu"
         android:background="@drawable/main_menu_button"
-        android:onClick="openMainMenu"/>
+        android:onClick="openMainMenu"
+        android:layout_marginBottom="36dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/deathMessage"
+        android:layout_marginBottom="18dp"
+        android:textSize="18sp"
+        android:layout_above="@+id/mainMenu"
+        android:layout_centerHorizontal="true"
+        android:layout_width="375dp"
+        android:layout_height="110dp" />
 </RelativeLayout>
