@@ -18,7 +18,7 @@ public class GameOverActivity extends AppCompatActivity {
         //the current activity
         int deathReason = intent.getIntExtra("key", 0);
 
-        final TextView deathMessage = (TextView)findViewById(R.id.deathMessage);
+        TextView deathMessage = (TextView)findViewById(R.id.deathMessage);
 
         /*
             Death Status codes:

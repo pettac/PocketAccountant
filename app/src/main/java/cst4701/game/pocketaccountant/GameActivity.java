@@ -15,7 +15,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -134,13 +133,16 @@ public class GameActivity extends AppCompatActivity {
                     //once these conditions are met it will change to space for good
                     //to easily test just make these values super low
                     //I like to make agecounter > 5 and the rest > 20
-                    if (ageCounter > 100 &&
+                    if (ageCounter > 250 &&
                             happyValue > 80 &&
                             hungerValue > 80 &&
                             hungerValue > 80 &&
                             energyValue > 80) {
-                        RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_continue);
-                        layout.setBackgroundResource(R.drawable.spacebackground);
+                        Intent intent = new Intent(getBaseContext(), SpaceActivity.class);
+                        startActivity(intent);
+                        finish();
+                        return;
+
                     }
 
                     //change text to show current hunger, happy, fun and energy value
@@ -157,10 +159,17 @@ public class GameActivity extends AppCompatActivity {
                  */
                 //if happiness is <= 0 set happiness values to 0 and end countdown
                 else if ((happyValue-20) <= 0){
+                    //create new intent
                     Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
+                    //store key and value in intent
                     intent.putExtra("key", 1);
+                    //launch activity
                     startActivity(intent);
+                    //call finish method
                     finish();
+                    //this properly kills the activity
+                    return;
+
                 }
                 //if hunger <= 0 set hunger values to 0 and end countdown
                 else if ((hungerValue-20) <= 0) {
@@ -168,6 +177,7 @@ public class GameActivity extends AppCompatActivity {
                     intent.putExtra("key", 2);
                     startActivity(intent);
                     finish();
+                    return;
                 }
 
                 //if hygiene <=0 set fun values to 0 and end countdown
@@ -176,6 +186,7 @@ public class GameActivity extends AppCompatActivity {
                     intent.putExtra("key", 3);
                     startActivity(intent);
                     finish();
+                    return;
                 }
 
                 //if energy <=0 set fun values to 0 and end countdown
@@ -184,6 +195,7 @@ public class GameActivity extends AppCompatActivity {
                     intent.putExtra("key", 4);
                     startActivity(intent);
                     finish();
+                    return;
                 }
             }
         }.start();
@@ -261,6 +273,11 @@ public class GameActivity extends AppCompatActivity {
         hygieneValue = values.getInt("hygiene", 100);
         energyValue = values.getInt("energy", 100);
         ageCounter = values.getInt("age", 0);
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
     }
 
     //The following 4 methods create a popup menu to display icons. It is done this way because
