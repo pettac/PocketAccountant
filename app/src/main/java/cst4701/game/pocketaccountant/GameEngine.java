@@ -43,7 +43,7 @@ public class GameEngine {
             }
             else if (happyValue > 0) {
                 accountantImage.setBackgroundResource(R.drawable.baby_accountant_sad);
-                happyBar.getProgressDrawable().setColorFilter(Color.RED,
+                happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"),
                         android.graphics.PorterDuff.Mode.SRC_IN);
             }
         }
@@ -61,7 +61,7 @@ public class GameEngine {
             }
             else if (happyValue > 0) {
                 accountantImage.setBackgroundResource(R.drawable.teen_accountant_sad);
-                happyBar.getProgressDrawable().setColorFilter(Color.RED,
+                happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"),
                         android.graphics.PorterDuff.Mode.SRC_IN);
             }
         }
@@ -79,7 +79,7 @@ public class GameEngine {
             }
             else if (happyValue > 0) {
                 accountantImage.setBackgroundResource(R.drawable.adult_acct_sad);
-                happyBar.getProgressDrawable().setColorFilter(Color.RED,
+                happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"),
                         android.graphics.PorterDuff.Mode.SRC_IN);
             }
         }
@@ -97,7 +97,7 @@ public class GameEngine {
             }
             else if (happyValue > 0) {
                 accountantImage.setBackgroundResource(R.drawable.sado);
-                happyBar.getProgressDrawable().setColorFilter(Color.RED,
+                happyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"),
                         android.graphics.PorterDuff.Mode.SRC_IN);
             }
         }
@@ -131,7 +131,7 @@ public class GameEngine {
                     android.graphics.PorterDuff.Mode.SRC_IN);
         }
         else if (funValue > 0) {
-            funBar.getProgressDrawable().setColorFilter(Color.RED,
+            funBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"),
                     android.graphics.PorterDuff.Mode.SRC_IN);
         }
     }
@@ -146,7 +146,7 @@ public class GameEngine {
                     android.graphics.PorterDuff.Mode.SRC_IN);
         }
         else if (energyValue > 0) {
-            energyBar.getProgressDrawable().setColorFilter(Color.RED,
+            energyBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"),
                     android.graphics.PorterDuff.Mode.SRC_IN);
         }
     }

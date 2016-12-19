@@ -14,29 +14,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openNewGame(View view){
-        //File file = this.getApplicationContext().getFileStreamPath("values.xml");
         this.getApplicationContext().getSharedPreferences("values", 0).edit().clear().apply();
-
         Intent intent = new Intent(this, GameActivity.class);
-//        Bundle b = new Bundle();
-//        b.putInt("happy", 100);
-//        b.putInt("hunger", 100);
-//        b.putInt("fun", 100);
-//        b.putInt("energy", 100);
-//        b.putInt("age", 0);
         startActivity(intent);
     }
 
     public void openContinue(View view){
-        SharedPreferences values = getApplicationContext().getSharedPreferences("values", 0);
-
+//        SharedPreferences values = getApplicationContext().getSharedPreferences("values", 0);
         Intent intent = new Intent(this, GameActivity.class);
-        Bundle b = new Bundle();
-//        b.putInt("happy", values.getInt("happy", 100));
-//        b.putInt("hunger", values.getInt("hunger", 100));
-//        b.putInt("fun", values.getInt("fun", 100));
-//        b.putInt("energy", values.getInt("energy", 100));
-//        b.putInt("age", values.getInt("age", 0));
         startActivity(intent);
     }
 

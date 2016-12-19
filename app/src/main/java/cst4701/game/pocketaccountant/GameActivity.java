@@ -43,7 +43,7 @@ public class GameActivity extends AppCompatActivity {
             - 65+ is an old fart
             Something like that
         TO DO:
-            - Fix progress bars not turning red
+           x - Fix progress bars not turning red
             - Add icons for fun and happy
            x - Add accountant image
             - Make accountant pace back and forth on screen
@@ -57,6 +57,8 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_continue);
 
+        //access the shared preferences file. If the values do not exist it will default to 100 or 0
+        //if the values exist it assigns the value in the file to the global variable
         SharedPreferences values = getApplicationContext().getSharedPreferences("values", 0);
         happyValue = values.getInt("happy", 100);
         hungerValue = values.getInt("hunger", 100);
@@ -116,18 +118,8 @@ public class GameActivity extends AppCompatActivity {
         final ImageView accountantImage = (ImageView) findViewById(R.id.accountantImage);
         //set initial accountant image
         accountantImage.setBackgroundResource(R.drawable.baby_accountant_happy);
-        /*
-
-        Animation animSlide = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.slide);
-
-        // Start the animation like this
-        accountantImage.startAnimation(animSlide);
-        */
         GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
                 funValue, happyBar, hungerBar, energyBar, funBar, accountantImage);
-
-        //engine.animation(this.getApplicationContext(), this);
 
         new CountDownTimer(5000, 1000) {
 
@@ -145,12 +137,12 @@ public class GameActivity extends AppCompatActivity {
             public void onFinish() {
                 //check if happiness or hunger go below 0
                 //if not then continue as normal and restart countdown
-                if ((happyValue-20)>0 && (hungerValue-20)>0 && (funValue-20)>0 && (energyValue-20)>0){
+                if ((happyValue-10)>0 && (hungerValue-10)>0 && (funValue-10)>0 && (energyValue-10)>0){
                     //decrease hunger value and happy value by 10
-                    hungerValue -= 20;
-                    happyValue -= 20;
-                    funValue -= 20;
-                    energyValue -= 20;
+                    hungerValue -= 10;
+                    happyValue -= 10;
+                    funValue -= 10;
+                    energyValue -= 10;
 
                     //set progress bars to current hunger, happy, fun, and energy value
                     happyBar.setProgress(happyValue);
@@ -163,26 +155,26 @@ public class GameActivity extends AppCompatActivity {
                     this.start();
                 }
                 //if happiness is <= 0 set happiness values to 0 and end countdown
-                if ((happyValue-20) <= 0){
+                if ((happyValue-10) <= 0){
                     timer.setText("0");
                     happyBar.setProgress(0);
 
-                    hungerBar.setProgress(hungerValue-20);
-                    funBar.setProgress(funValue-20);
-                    energyBar.setProgress(energyValue-20);
+                    hungerBar.setProgress(hungerValue-10);
+                    funBar.setProgress(funValue-10);
+                    energyBar.setProgress(energyValue-10);
 
                     //game over, show dead accountant
                     //fix this to show correct accountant
                     accountantImage.setBackgroundResource(R.drawable.tombstone);
                 }
                 //if hunger <= 0 set hunger values to 0 and end countdown
-                else if ((hungerValue-20) <= 0) {
+                else if ((hungerValue-10) <= 0) {
                     timer.setText("0");
                     hungerBar.setProgress(0);
 
-                    happyBar.setProgress(happyValue-20);
-                    funBar.setProgress(funValue-20);
-                    energyBar.setProgress(energyValue-20);
+                    happyBar.setProgress(happyValue-10);
+                    funBar.setProgress(funValue-10);
+                    energyBar.setProgress(energyValue-10);
 
                     //game over, show dead accountant
                     //fix this to show correct accountant
@@ -190,25 +182,25 @@ public class GameActivity extends AppCompatActivity {
                 }
 
                 //if fun <=0 set fun values to 0 and end countdown
-                else if ((funValue-20) <= 0){
+                else if ((funValue-10) <= 0){
                     timer.setText("0");
                     funBar.setProgress(0);
 
-                    happyBar.setProgress(happyValue-20);
-                    hungerBar.setProgress(hungerValue-20);
-                    energyBar.setProgress(energyValue-20);
+                    happyBar.setProgress(happyValue-10);
+                    hungerBar.setProgress(hungerValue-10);
+                    energyBar.setProgress(energyValue-10);
 
                     accountantImage.setBackgroundResource(R.drawable.tombstone);
                 }
 
                 //if energy <=0 set fun values to 0 and end countdown
-                else if ((energyValue-20) <= 0){
+                else if ((energyValue-10) <= 0){
                     timer.setText("0");
                     energyBar.setProgress(0);
 
-                    happyBar.setProgress(happyValue-20);
-                    hungerBar.setProgress(hungerValue-20);
-                    funBar.setProgress(funValue-20);
+                    happyBar.setProgress(happyValue-10);
+                    hungerBar.setProgress(hungerValue-10);
+                    funBar.setProgress(funValue-10);
 
                     accountantImage.setBackgroundResource(R.drawable.tombstone);
                 }
@@ -326,6 +318,8 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
+        //Any time the app looses focus it opens the SharedPreferences file and stores the
+        //values to the appropriate key then saves the file
         SharedPreferences settings = getApplicationContext().getSharedPreferences("values", 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt("happy", happyValue);
@@ -340,7 +334,8 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-
+        //When the app resumes focus it assigns the key values to the global variables.
+        //If the values do not exist in the file it defaults to 100 or 0
         SharedPreferences values = getApplicationContext().getSharedPreferences("values", 0);
         happyValue = values.getInt("happy", 100);
         hungerValue = values.getInt("hunger", 100);
