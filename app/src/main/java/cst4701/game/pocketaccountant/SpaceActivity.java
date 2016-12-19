@@ -15,6 +15,8 @@ public class SpaceActivity extends AppCompatActivity {
 
     public void openMainMenu(View view){
         Intent intent = new Intent(this, MainActivity.class);
+        finish();
         startActivity(intent);
+        return;
     }
 }

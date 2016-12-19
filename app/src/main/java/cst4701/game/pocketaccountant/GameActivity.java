@@ -49,7 +49,7 @@ public class GameActivity extends AppCompatActivity {
         ageCounter = values.getInt("age", 0);
 
         //assign variable to TextView objects
-        final TextView timer = (TextView)findViewById(R.id.countdownTimer);
+        //final TextView timer = (TextView)findViewById(R.id.countdownTimer);
 
         //assign ImageView icons to variables
         final ImageView hungerIcon = (ImageView)findViewById(R.id.hungerIcon);
@@ -100,13 +100,14 @@ public class GameActivity extends AppCompatActivity {
         new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
                 hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
 
-        new CountDownTimer(5000, 1000) {
+        new CountDownTimer(6000, 1000) {
 
             //what to during each tick of the timer
             public void onTick(long millisUntilFinished) {
                 GameEngine engine = new GameEngine(ageCounter, happyValue, hungerValue, energyValue,
                         hygieneValue, happyBar, hungerBar, energyBar, hygieneBar, accountantImage);
-                timer.setText(Long.toString(millisUntilFinished / 1000));
+                //shows the timer for each cycle
+                //timer.setText(Long.toString(millisUntilFinished / 1000));
                 engine.setAge();
 
                 ageCounter++;
@@ -133,14 +134,14 @@ public class GameActivity extends AppCompatActivity {
                     //once these conditions are met it will change to space for good
                     //to easily test just make these values super low
                     //I like to make agecounter > 5 and the rest > 20
-                    if (ageCounter > 250 &&
-                            happyValue > 80 &&
-                            hungerValue > 80 &&
-                            hungerValue > 80 &&
-                            energyValue > 80) {
+                    if (ageCounter > 90 &&
+                            happyValue > 60 &&
+                            hungerValue > 60 &&
+                            hungerValue > 60 &&
+                            energyValue > 60) {
                         Intent intent = new Intent(getBaseContext(), SpaceActivity.class);
-                        startActivity(intent);
                         finish();
+                        startActivity(intent);
                         return;
 
                     }
@@ -163,10 +164,10 @@ public class GameActivity extends AppCompatActivity {
                     Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
                     //store key and value in intent
                     intent.putExtra("key", 1);
-                    //launch activity
-                    startActivity(intent);
                     //call finish method
                     finish();
+                    //launch activity
+                    startActivity(intent);
                     //this properly kills the activity
                     return;
 
@@ -175,8 +176,8 @@ public class GameActivity extends AppCompatActivity {
                 else if ((hungerValue-20) <= 0) {
                     Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
                     intent.putExtra("key", 2);
-                    startActivity(intent);
                     finish();
+                    startActivity(intent);
                     return;
                 }
 
@@ -184,8 +185,8 @@ public class GameActivity extends AppCompatActivity {
                 else if ((hygieneValue - 20) <= 0){
                     Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
                     intent.putExtra("key", 3);
-                    startActivity(intent);
                     finish();
+                    startActivity(intent);
                     return;
                 }
 
@@ -193,8 +194,8 @@ public class GameActivity extends AppCompatActivity {
                 else if ((energyValue-20) <= 0){
                     Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
                     intent.putExtra("key", 4);
-                    startActivity(intent);
                     finish();
+                    startActivity(intent);
                     return;
                 }
             }

@@ -103,11 +103,5 @@
         android:layout_below="@+id/countdownTimer"
         android:layout_centerHorizontal="true"
         android:layout_height="300dp" />
-    <!--
-     android:layout_alignParentBottom="true"
-        android:layout_below="@+id/funIcon"
-        android:layout_alignEnd="@+id/countdownTimer"
-        android:layout_toEndOf="@+id/hungerIcon"
-    -->
 
 </RelativeLayout>
